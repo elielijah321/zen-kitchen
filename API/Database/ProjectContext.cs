@@ -33,5 +33,6 @@ namespace Project.Function
         }
 
         public DbSet<Defendant> Defendants { get; set; }
+        public DbSet<Case> Cases { get; set; }
     }
 }

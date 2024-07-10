@@ -4,7 +4,7 @@ import './SideMenu.css';
 import NestBox from "./icons/nest-box.png";
 import Profile from "./icons/profile.png";
 // import RabbitIcon from "./icons/Rabbit.png";
-// import Money from "./icons/money.png";
+import Money from "./icons/money.png";
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Home from '../Home';
 
@@ -12,6 +12,8 @@ import DefendantsPage from '../Defendant/DefendantsPage';
 import EditDefendant from '../Defendant/EditDefendant';
 import ForgotPasswordPage from './Authentication/ForgotPassword';
 import LoginPage from './Authentication/LoginPage';
+import CasesPage from '../Cases/CasesPage';
+import EditCase from '../Cases/EditCase';
 
 const SideMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +27,8 @@ const SideMenu: React.FC = () => {
   const menuItems = 
   [
       { name: 'Home', icon: NestBox, path: '/home' },
-      { name: 'Defendants', icon: Profile, path: '/Defendants' }
+      { name: 'Defendants', icon: Profile, path: '/Defendants' },
+      { name: 'Cases', icon: Money, path: '/Cases' }
   ];
 
   const isAuthenticated = () => {
@@ -64,6 +67,9 @@ const SideMenu: React.FC = () => {
               <Route path="/home" element={navigateToPageIfAuthenticated(<Home />)} />
               <Route path="/Defendants" element={navigateToPageIfAuthenticated(<DefendantsPage />)} />
               <Route path="/Defendant/:id" element={navigateToPageIfAuthenticated(<EditDefendant />)} />
+
+              <Route path="/Cases" element={navigateToPageIfAuthenticated(<CasesPage />)} />
+              <Route path="/Case/:id" element={navigateToPageIfAuthenticated(<EditCase />)} />
 
               <Route path="/login" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />

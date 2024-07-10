@@ -4,14 +4,14 @@ using Project.Function;
 
 namespace Project.Configuration{
 
-    public class DefendantConfigurations : IEntityTypeConfiguration<Defendant>
+    public class CasesConfigurations : IEntityTypeConfiguration<Case>
     {
-        public void Configure(EntityTypeBuilder<Defendant> builder)
+        public void Configure(EntityTypeBuilder<Case> builder)
         {
-            builder.ToTable("Defendants", "dbo");
+            builder.ToTable("Cases", "dbo");
             
             builder.HasKey(e => e.Id)
-                    .HasName("PK__AuditLog");
+                    .HasName("PK__Case");
 
             builder.Property(e => e.Id)
                     .HasDefaultValueSql("NEWID()");

@@ -2,16 +2,16 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { Accordion, Button, Form, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { canEdit } from '../../helpers/UserHelper';
-import { Defendant } from '../../types/Defendant/Defendant';
+import { Case } from '../../types/Case/Case';
 import Loading from '../HelperComponents/Loading';
-import { getAllDefendants, searchAllDefendants } from '../../functions/fetchEntities';
+import { getAllCases, searchAllCases } from '../../functions/fetchEntities';
 
-function DefendantsPage() {
+function CasesPage() {
 
   // const state = useSelector((state: RootState) => state.systemUser);
   // const systemUser = state.systemUser;
 
-  const [defendants, setDefendants] = useState<Defendant[] | undefined>(undefined);
+  const [cases, setCases] = useState<Case[] | undefined>(undefined);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
 
@@ -21,20 +21,20 @@ function DefendantsPage() {
 
     if(name === "")
     {
-      getAllDefendants()
-        .then(defendants => setDefendants(defendants));
+      getAllCases()
+        .then(cases => setCases(cases));
 
     }else{
-      searchAllDefendants(name)
-      .then(defendants => setDefendants(defendants));
+      searchAllCases(name)
+      .then(cases => setCases(cases));
     }
     
   }
 
   useEffect(() => {
     // fetch data
-    getAllDefendants()
-      .then(defendants => setDefendants(defendants));
+    getAllCases()
+      .then(cases => setCases(cases));
   }, [])
 
   return (
@@ -58,44 +58,42 @@ function DefendantsPage() {
             //systemUser
             canEdit() &&
             <div className='add-new-entity-btn'>
-                  <Link className="navitem" to="/Defendant/new">
+                  <Link className="navitem" to="/Case/new">
                       <Button variant="primary" className="mb-3">
-                          Add Defendant
+                          Add Case
                       </Button>
                   </Link>
               </div>
             }
         </div>
         
-        {defendants !== undefined ?
+        {cases !== undefined ?
         (
           <div>
-            <Accordion defaultActiveKey={"defendants"}>
-                <Accordion.Item key={"defendants"} eventKey={"defendants"}>
-                        <Accordion.Header>{"Defendants"}</Accordion.Header>
+            <Accordion defaultActiveKey={"cases"}>
+                <Accordion.Item key={"cases"} eventKey={"cases"}>
+                        <Accordion.Header>{"Cases"}</Accordion.Header>
                         <Accordion.Body>
                           {
-                          defendants.length > 0 ? 
+                          cases.length > 0 ? 
                           <div>
                             <Table striped hover responsive>
                               <thead>
                                   <tr>
-                                      <th>Name</th>
-                                      <th>E-mail</th>
+                                      <th>Title</th>
                                       <th></th>
                                   </tr>
                               </thead>
                               <tbody>
-                                  {defendants.map((defendant: Defendant) => {
+                                  {cases.map((_case: Case) => {
 
                                     return (
-                                      <tr key={defendant.id}>
-                                          <td className='defendant-name'>{defendant.name}</td>
-                                          <td className='defendant-email'>{defendant.email}</td>
+                                      <tr key={_case.id}>
+                                          <td className='case-title'>{_case.title}</td>
                                           <td>
                                             {
-                                              <Link to={`/Defendant/${defendant.id}`} className="button">
-                                                  <Button id={`${defendant.name}-btn`}>
+                                              <Link to={`/Case/${_case.id}`} className="button">
+                                                  <Button id={`${_case.id}-btn`}>
                                                       Edit
                                                   </Button>
                                               </Link>
@@ -107,7 +105,7 @@ function DefendantsPage() {
                                   })}
                               </tbody>
                             </Table>
-                          </div> : <div>No defendants</div>
+                          </div> : <div>No cases</div>
                           }
                         </Accordion.Body>
                 </Accordion.Item>
@@ -121,4 +119,4 @@ function DefendantsPage() {
   )
 }
 
-export default DefendantsPage;
+export default CasesPage;

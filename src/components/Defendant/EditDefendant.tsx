@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
-import { DefendantRequest } from '../../types/RequestModels/DefendantRequest';
+import { DefendantRequest } from '../../types/Defendant/DefendantRequest';
 import { deleteDefendantById, getDefendantById, postDefendant } from '../../functions/fetchEntities';
 import Loading from '../HelperComponents/Loading';
 

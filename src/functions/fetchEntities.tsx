@@ -1,4 +1,5 @@
-import { Defendant } from "../types/Defendant";
+import { Case } from "../types/Case/Case";
+import { Defendant } from "../types/Defendant/Defendant";
 
 
 const domain = "https://court-app-template.azurewebsites.net/api"; 
@@ -62,4 +63,37 @@ export const postDefendant = async (defendant: Defendant) => {
 
 export const deleteDefendantById = async (id: string) => {
     await fetch(`${domain}/DeleteDefendant/${id}`, getGETOptions());;
+}
+
+
+export const getAllCases = async () => {
+    const response = await fetch(`${domain}/GetAllCases`, getGETOptions())
+        .then(response => response.json() as Promise<Case[]>);
+
+    return response;
+}
+
+export const searchAllCases = async (searchTerm: string) => {
+    const response = await fetch(`${domain}/GetAllCases?searchTerm=${searchTerm}`, getGETOptions())
+        .then(response => response.json() as Promise<Case[]>);
+
+    return response;
+}
+
+export const getCaseById = async (id: string) => {
+
+    const response = await fetch(`${domain}/GetCase/${id}`, getGETOptions())
+        .then(response => response.json() as Promise<Case>);
+
+    return response;
+}
+
+export const postCase = async (_case: Case) => {
+    const response = await fetch(`${domain}/PostCase`, getPOSTOptions(_case));
+
+    return response;
+}
+
+export const deleteCaseById = async (id: string) => {
+    await fetch(`${domain}/DeleteCase/${id}`, getGETOptions());;
 }

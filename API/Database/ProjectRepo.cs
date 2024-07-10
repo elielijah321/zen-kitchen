@@ -48,6 +48,42 @@ namespace AzureFunctions.Database
            return GetAllDefendants().FirstOrDefault(x => x.Email == email);
         }
 
+      public void AddCase(Case newCase)
+      {
+         _ctx.Cases.Add(newCase);
+         SaveAll();
+      }
+
+        public void UpdateCase(Case newCase)
+        {
+           var caseToUpdate = _ctx.Cases.FirstOrDefault(c => c.Id == newCase.Id);
+           caseToUpdate.Title = newCase.Title;
+
+           SaveAll();
+        }
+
+        public IEnumerable<Case> GetAllCases()
+        {
+           return _ctx.Cases;
+        }
+
+        public Case GetCaseById(string id)
+        {
+           return GetAllCases().FirstOrDefault(x => x.Id.ToString() == id);
+        }
+
+        public Case GetCaseByTitle(string title)
+        {
+           return GetAllCases().FirstOrDefault(x => x.Title == title);
+        }
+
+        public IEnumerable<Case> GetCaseByTerm(string searchTerm)
+        {
+           return GetAllCases().Where(c => 
+                            c.Title.ToLower().Contains(searchTerm)
+                        );
+        }
+
         // Save
         private bool SaveAll()
         {
