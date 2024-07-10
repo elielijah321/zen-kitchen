@@ -1,7 +1,7 @@
-import { Customer } from "../types/Customer";
+import { Defendant } from "../types/Defendant";
 
 
-const domain = "https://gym-template.azurewebsites.net/api"; 
+const domain = "https://court-app-template.azurewebsites.net/api"; 
 // const domain = "http://localhost:7071/api";
 
 const getHeaders = () => {
@@ -32,34 +32,34 @@ export const getTestFunction = async () => {
     return response;
 }
 
-export const getAllCustomers = async () => {
-    const response = await fetch(`${domain}/GetAllCustomers`, getGETOptions())
-        .then(response => response.json() as Promise<Customer[]>);
+export const getAllDefendants = async () => {
+    const response = await fetch(`${domain}/GetAllDefendants`, getGETOptions())
+        .then(response => response.json() as Promise<Defendant[]>);
 
     return response;
 }
 
-export const searchAllCustomers = async (searchTerm: string) => {
-    const response = await fetch(`${domain}/GetAllCustomers?searchTerm=${searchTerm}`, getGETOptions())
-        .then(response => response.json() as Promise<Customer[]>);
+export const searchAllDefendants = async (searchTerm: string) => {
+    const response = await fetch(`${domain}/GetAllDefendants?searchTerm=${searchTerm}`, getGETOptions())
+        .then(response => response.json() as Promise<Defendant[]>);
 
     return response;
 }
 
-export const getCustomerById = async (id: string) => {
+export const getDefendantById = async (id: string) => {
 
-    const response = await fetch(`${domain}/GetCustomer/${id}`, getGETOptions())
-        .then(response => response.json() as Promise<Customer>);
-
-    return response;
-}
-
-export const postCustomer = async (customer: Customer) => {
-    const response = await fetch(`${domain}/PostCustomer`, getPOSTOptions(customer));
+    const response = await fetch(`${domain}/GetDefendant/${id}`, getGETOptions())
+        .then(response => response.json() as Promise<Defendant>);
 
     return response;
 }
 
-export const deleteCustomerById = async (id: string) => {
-    await fetch(`${domain}/DeleteCustomer/${id}`, getGETOptions());;
+export const postDefendant = async (defendant: Defendant) => {
+    const response = await fetch(`${domain}/PostDefendant`, getPOSTOptions(defendant));
+
+    return response;
+}
+
+export const deleteDefendantById = async (id: string) => {
+    await fetch(`${domain}/DeleteDefendant/${id}`, getGETOptions());;
 }

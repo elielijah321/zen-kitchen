@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Function;
 
@@ -12,10 +11,9 @@ using Project.Function;
 namespace API.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20240624175431_AddLastPaymentDate")]
-    partial class AddLastPaymentDate
+    partial class ProjectContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,13 +22,12 @@ namespace API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Project.Function.Customer", b =>
+            modelBuilder.Entity("Project.Function.Defendant", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AccountNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<string>("Address_City")
                         .HasColumnType("nvarchar(max)");
@@ -44,27 +41,13 @@ namespace API.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastPaymentDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PaymentStatus")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id")
+                        .HasName("PK__AuditLog");
 
-                    b.Property<string>("SortCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StripeId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("StudentDiscount")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customers");
+                    b.ToTable("Defendants", "dbo");
                 });
 #pragma warning restore 612, 618
         }

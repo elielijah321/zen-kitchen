@@ -12,7 +12,7 @@
     float: right !important;
 }
 
-.search-customer-input{
+.search-defendant-input{
     padding-top: 15px;
     padding-right: 15px;
     float: left !important;
@@ -48,7 +48,7 @@
     margin-right: 10px;
 }
 
-.edit-customer-action-btns{
+.edit-defendant-action-btns{
     float: right;
     margin-left: 10px;
 }

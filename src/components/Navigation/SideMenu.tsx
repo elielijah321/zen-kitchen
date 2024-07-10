@@ -8,8 +8,8 @@ import Profile from "./icons/profile.png";
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Home from '../Home';
 
-import CustomersPage from '../Customer/CustomersPage';
-import EditCustomer from '../Customer/EditCustomer';
+import DefendantsPage from '../Defendant/DefendantsPage';
+import EditDefendant from '../Defendant/EditDefendant';
 import ForgotPasswordPage from './Authentication/ForgotPassword';
 import LoginPage from './Authentication/LoginPage';
 
@@ -25,7 +25,7 @@ const SideMenu: React.FC = () => {
   const menuItems = 
   [
       { name: 'Home', icon: NestBox, path: '/home' },
-      { name: 'Customers', icon: Profile, path: '/Customers' }
+      { name: 'Defendants', icon: Profile, path: '/Defendants' }
   ];
 
   const isAuthenticated = () => {
@@ -62,8 +62,8 @@ const SideMenu: React.FC = () => {
           <Routes>
               <Route path="/" element={navigateToPageIfAuthenticated(<Home />)} />
               <Route path="/home" element={navigateToPageIfAuthenticated(<Home />)} />
-              <Route path="/Customers" element={navigateToPageIfAuthenticated(<CustomersPage />)} />
-              <Route path="/Customer/:id" element={navigateToPageIfAuthenticated(<EditCustomer />)} />
+              <Route path="/Defendants" element={navigateToPageIfAuthenticated(<DefendantsPage />)} />
+              <Route path="/Defendant/:id" element={navigateToPageIfAuthenticated(<EditDefendant />)} />
 
               <Route path="/login" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />

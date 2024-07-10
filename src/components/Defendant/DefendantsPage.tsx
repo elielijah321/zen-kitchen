@@ -2,17 +2,16 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { Accordion, Button, Form, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { canEdit } from '../../helpers/UserHelper';
-import { Customer } from '../../types/Customer';
+import { Defendant } from '../../types/Defendant';
 import Loading from '../HelperComponents/Loading';
-import { getAllCustomers, searchAllCustomers } from '../../functions/fetchEntities';
-import { getDisplayDate } from '../../helpers/DateHelper';
+import { getAllDefendants, searchAllDefendants } from '../../functions/fetchEntities';
 
-function CustomersPage() {
+function DefendantsPage() {
 
   // const state = useSelector((state: RootState) => state.systemUser);
   // const systemUser = state.systemUser;
 
-  const [customers, setCustomers] = useState<Customer[] | undefined>(undefined);
+  const [defendants, setDefendants] = useState<Defendant[] | undefined>(undefined);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
 
@@ -22,27 +21,27 @@ function CustomersPage() {
 
     if(name === "")
     {
-      getAllCustomers()
-        .then(customers => setCustomers(customers));
+      getAllDefendants()
+        .then(defendants => setDefendants(defendants));
 
     }else{
-      searchAllCustomers(name)
-      .then(customers => setCustomers(customers));
+      searchAllDefendants(name)
+      .then(defendants => setDefendants(defendants));
     }
     
   }
 
   useEffect(() => {
     // fetch data
-    getAllCustomers()
-      .then(customers => setCustomers(customers));
+    getAllDefendants()
+      .then(defendants => setDefendants(defendants));
   }, [])
 
   return (
     <>
       <div className='page'>
         <div className='entity-button-container'>
-          <div className='search-customer-input'>
+          <div className='search-defendant-input'>
             <Form.Group className="mb-3">
                 <Form.Control 
                 id="edit-name"
@@ -59,48 +58,44 @@ function CustomersPage() {
             //systemUser
             canEdit() &&
             <div className='add-new-entity-btn'>
-                  <Link className="navitem" to="/Customer/new">
+                  <Link className="navitem" to="/Defendant/new">
                       <Button variant="primary" className="mb-3">
-                          Add Customer
+                          Add Defendant
                       </Button>
                   </Link>
               </div>
             }
         </div>
         
-        {customers !== undefined ?
+        {defendants !== undefined ?
         (
           <div>
-            <Accordion defaultActiveKey={"customers"}>
-                <Accordion.Item key={"customers"} eventKey={"customers"}>
-                        <Accordion.Header>{"Customers"}</Accordion.Header>
+            <Accordion defaultActiveKey={"defendants"}>
+                <Accordion.Item key={"defendants"} eventKey={"defendants"}>
+                        <Accordion.Header>{"Defendants"}</Accordion.Header>
                         <Accordion.Body>
                           {
-                          customers.length > 0 ? 
+                          defendants.length > 0 ? 
                           <div>
                             <Table striped hover responsive>
                               <thead>
                                   <tr>
                                       <th>Name</th>
                                       <th>E-mail</th>
-                                      <th>Payment Status</th>
-                                      <th>Last Payment Date</th>
                                       <th></th>
                                   </tr>
                               </thead>
                               <tbody>
-                                  {customers.map((customer: Customer) => {
+                                  {defendants.map((defendant: Defendant) => {
 
                                     return (
-                                      <tr key={customer.id}>
-                                          <td className='customer-name'>{customer.name}</td>
-                                          <td className='customer-email'>{customer.email}</td>
-                                          <td className='customer-payment-status'>{customer.paymentStatus}</td>
-                                          <td className='customer-last-payment'>{getDisplayDate(customer.lastPaymentDate)}</td>
+                                      <tr key={defendant.id}>
+                                          <td className='defendant-name'>{defendant.name}</td>
+                                          <td className='defendant-email'>{defendant.email}</td>
                                           <td>
                                             {
-                                              <Link to={`/Customer/${customer.id}`} className="button">
-                                                  <Button id={`${customer.name}-btn`}>
+                                              <Link to={`/Defendant/${defendant.id}`} className="button">
+                                                  <Button id={`${defendant.name}-btn`}>
                                                       Edit
                                                   </Button>
                                               </Link>
@@ -112,7 +107,7 @@ function CustomersPage() {
                                   })}
                               </tbody>
                             </Table>
-                          </div> : <div>No customers</div>
+                          </div> : <div>No defendants</div>
                           }
                         </Accordion.Body>
                 </Accordion.Item>
@@ -126,4 +121,4 @@ function CustomersPage() {
   )
 }
 
-export default CustomersPage;
+export default DefendantsPage;

@@ -13,26 +13,26 @@ using System.Linq;
 
 namespace Project.Function
 {
-    public static class GetAllCustomers
+    public static class GetAllDefendants
     {
-        [FunctionName("GetAllCustomers")]
+        [FunctionName("GetAllDefendants")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("GetAllCustomers function processed a request.");
+            log.LogInformation("GetAllDefendants function processed a request.");
 
             var repo = RepositoryWrapper.GetRepo();
 
             string searchTerm = req.Query["searchTerm"].ToString().ToLower();
 
-            List<Customer> data = null;
+            List<Defendant> data = null;
 
             if(string.IsNullOrEmpty(searchTerm))
             {
-                data = repo.GetAllCustomers().ToList();
+                data = repo.GetAllDefendants().ToList();
             }else{
-                data = repo.GetAllCustomers()
+                data = repo.GetAllDefendants()
                         .Where(c => 
                             c.Name.ToLower().Contains(searchTerm) ||
                             c.Email.ToLower().Contains(searchTerm)

@@ -2,7 +2,7 @@ using System;
 
 namespace Project.Function
 {
-    public class UpdateCustomerResponseModel : Customer
+    public class UpdateDefendantRequestModel : Defendant
     {
 
     }

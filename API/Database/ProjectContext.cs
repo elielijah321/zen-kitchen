@@ -21,16 +21,17 @@ namespace Project.Function
             optionsBuilder.EnableSensitiveDataLogging();
 
             // var connectionString = Environment.GetEnvironmentVariable("MARINEL_DEV_CONNECTION_STRING");
-
-            var connectionString = "Server=tcp:gym-template-dev.database.windows.net,1433;Initial Catalog=Gym;Persist Security Info=False;User ID=elijah;Password=Weights1995;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            var connectionString = "Server=tcp:court-app-template.database.windows.net,1433;Initial Catalog=court-app;Persist Security Info=False;User ID=elijah;Password=Kabiyesi2024;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+            
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Defendant> Defendants { get; set; }
     }
 }

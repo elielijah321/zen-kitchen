@@ -15,55 +15,37 @@ namespace AzureFunctions.Database
             _ctx = ctx;
         }
 
-        public void AddCustomer(Customer newCustomer)
+        public void AddDefendant(Defendant newDefendant)
         {
-            //Might need to parse the sortcode 
-            newCustomer.StripeId = StripeService.CreateBACSSubscription(newCustomer);
-            newCustomer.PaymentStatus = "Registered";
-            
-           _ctx.Customers.Add(newCustomer);
+           _ctx.Defendants.Add(newDefendant);
            SaveAll();
         }
 
-        public void UpdateCustomer(Customer newCustomer)
+        public void UpdateDefendant(Defendant newDefendant)
         {
-           var customerToUpdate = _ctx.Customers.FirstOrDefault(c => c.Id == newCustomer.Id);
-           customerToUpdate.Name = newCustomer.Name;
-           customerToUpdate.Email = newCustomer.Email;
-           customerToUpdate.SortCode = newCustomer.SortCode;
-           customerToUpdate.AccountNumber = newCustomer.AccountNumber;
-           customerToUpdate.Address_Line1 = newCustomer.Address_Line1;
-           customerToUpdate.Address_City = newCustomer.Address_City;
-           customerToUpdate.Address_PostalCode = newCustomer.Address_PostalCode;
-           customerToUpdate.LastPaymentDate = newCustomer.LastPaymentDate;
-
-           customerToUpdate.StudentDiscount = newCustomer.StudentDiscount;
-           customerToUpdate.PaymentStatus = newCustomer.PaymentStatus;
+           var defendantToUpdate = _ctx.Defendants.FirstOrDefault(c => c.Id == newDefendant.Id);
+           defendantToUpdate.Name = newDefendant.Name;
+           defendantToUpdate.Email = newDefendant.Email;
+           defendantToUpdate.Address_Line1 = newDefendant.Address_Line1;
+           defendantToUpdate.Address_City = newDefendant.Address_City;
+           defendantToUpdate.Address_PostalCode = newDefendant.Address_PostalCode;
 
            SaveAll();
         }
 
-        public IEnumerable<Customer> GetAllCustomers()
+        public IEnumerable<Defendant> GetAllDefendants()
         {
-           return _ctx.Customers;
+           return _ctx.Defendants;
         }
 
-        public Customer GetCustomerById(string id)
+        public Defendant GetDefendantById(string id)
         {
-           return GetAllCustomers().FirstOrDefault(x => x.Id == id);
+           return GetAllDefendants().FirstOrDefault(x => x.Id.ToString() == id);
         }
 
-        public Customer GetCustomerByEmail(string email)
+        public Defendant GetDefendantByEmail(string email)
         {
-           return GetAllCustomers().FirstOrDefault(x => x.Email == email);
-        }
-
-        public void DeleteCustomer(string id)
-        {
-            Customer customer = GetCustomerById(id);
-            StripeService.DeleteCustomer(customer.StripeId);
-            _ctx.Customers.Remove(customer);
-            SaveAll();
+           return GetAllDefendants().FirstOrDefault(x => x.Email == email);
         }
 
         // Save

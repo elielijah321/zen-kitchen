@@ -11,18 +11,18 @@ using Newtonsoft.Json;
 
 namespace Project.Function
 {
-    public static class DeleteCustomer
+    public static class GetDefendant
     {
-        [FunctionName("DeleteCustomer")]
+        [FunctionName("GetDefendant")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "DeleteCustomer/{id}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "GetDefendant/{id}")] HttpRequest req,
             string id, ILogger log)
         {
-            log.LogInformation("DeleteCustomer function processed a request.");
+            log.LogInformation("GetDefendant function processed a request.");
 
-            RepositoryWrapper.GetRepo().DeleteCustomer(id);
+            var data = RepositoryWrapper.GetRepo().GetDefendantById(id);
 
-            return new OkObjectResult("");
+            return new OkObjectResult(data);
         }
     }
 }

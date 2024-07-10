@@ -11,26 +11,26 @@ using Newtonsoft.Json;
 
 namespace Project.Function
 {
-    public static class PostCustomer
+    public static class PostDefendant
     {
-        [FunctionName("PostCustomer")]
+        [FunctionName("PostDefendant")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("PostCustomer function processed a request.");
+            log.LogInformation("PostDefendant function processed a request.");
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            var data = JsonConvert.DeserializeObject<UpdateCustomerRequestModel>(requestBody);
+            var data = JsonConvert.DeserializeObject<UpdateDefendantRequestModel>(requestBody);
             var repo = RepositoryWrapper.GetRepo();
 
-            if (string.IsNullOrEmpty(data.Id))
+            if (data.Id != null)
             {
-                data.Id = Guid.NewGuid().ToString();
-                repo.AddCustomer(data);
+                // data.Id = Guid.NewGuid().ToString();
+                repo.AddDefendant(data);
             }else
             {
-                repo.UpdateCustomer(data);
+                repo.UpdateDefendant(data);
             }
 
             return new OkObjectResult(data);
