@@ -4,67 +4,70 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { CaseRequest } from '../../types/Case/CaseRequest';
 import { deleteCaseById, getCaseById, postCase } from '../../functions/fetchEntities';
 import Loading from '../HelperComponents/Loading';
+import { NavigateAction, View } from 'react-big-calendar';
+import CalendarComponent from '../Calendar/CalendarComponent';
+import moment from 'moment';
+import { CalendarEvent } from '../../types/Calendar/CalendarEvent';
+import { addHours } from '../../helpers/DateHelper';
 
 function EditCase() {
 
-// const state = useSelector((state: RootState) => state.systemUser);
-// const systemUser = state.systemUser;
+    // const state = useSelector((state: RootState) => state.systemUser);
+    // const systemUser = state.systemUser;
 
-const [hasBeenEdited, setHasBeenEdited] = useState(false);
-const [validated, setValidated] = useState(false);
+    const [hasBeenEdited, setHasBeenEdited] = useState(false);
+    const [validated, setValidated] = useState(false);
 
-const [selectedCase, setSelectedCase] = useState<CaseRequest>({} as CaseRequest);
+    const [selectedCase, setSelectedCase] = useState<CaseRequest>({} as CaseRequest);
+    const [currentDate, setCurrentDate] = useState(new Date());
 
-const navigate = useNavigate();
+    const [currentView, setCurrentView] = useState<View>('day');
+    const [activeAccordian, setActiveAccordian] = useState<string | null>(null);
 
-const { id } = useParams();
-const parsedId = id !== undefined ? id : "";
+    const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
 
+    const navigate = useNavigate();
 
-  useEffect(() => {
+    const { id } = useParams();
+    const parsedId = id !== undefined ? id : "";
 
-    if (parsedId !== "new") {
-        getCaseById(parsedId)
-            .then((data) => setSelectedCase(data));
-    }
+    useEffect(() => {
+
+        if (parsedId !== "new") {
+            getCaseById(parsedId)
+                .then((data) => setSelectedCase(data));
+        }
 
     }, [parsedId]);
 
+    const handleNavigate = (action: NavigateAction) => {
+
+        const viewToUnitsMap: Record<string, moment.unitOfTime.DurationConstructor> = {
+        day: 'day',
+        week: 'week',
+        month: 'month',
+        };
+        
+        let units = viewToUnitsMap[currentView.toString()] || 'week';
+
+        switch (action) {
+            case 'PREV':
+                setCurrentDate(moment(currentDate).subtract(1, units).toDate()); // Example: Move back one month
+                break;
+            case 'NEXT':
+                setCurrentDate(moment(currentDate).add(1, units).toDate()); // Example: Move forward one month
+                break;
+            default:
+                setCurrentDate(new Date()); // Set current date to today
+                break;
+        }
+    };
 
     const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const title = event.target.value;
         setSelectedCase({...selectedCase, title: title});
         setHasBeenEdited(true);
     }
-
- 
-    /*
-  
-    const handleClassChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        const classId = event.target.value;
-        setSelectedStudent({...selectedStudent, classId: classId});
-        setHasBeenEdited(true);
-    }
-
-    const handleDOBChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const dob = new Date(event.target.value);
-        setSelectedStudent({...selectedStudent, dob: dob});
-        setHasBeenEdited(true);
-    }
-
-    const handleDateLeftChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const dateLeft = new Date(event.target.value);
-        setSelectedStudent({...selectedStudent, dateLeft: dateLeft});
-        setHasBeenEdited(true);
-    }
-
-    const handleScholarshipTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        const scholarshipType = event.target.value;
-        setSelectedStudent({...selectedStudent, scholarshipType: scholarshipType});
-        setHasBeenEdited(true);
-    }
-
-    */
 
     const handleDelete = async (event:any) => {
         event.preventDefault();
@@ -94,8 +97,23 @@ const parsedId = id !== undefined ? id : "";
         setValidated(true);
     };
 
+    const onAddAppointment = (date: Date) => {
 
-  
+        var newEvent: CalendarEvent = {
+            title: selectedCase.title,
+            start: date,
+            end: addHours(date, 1)
+        }
+
+        setCalendarEvents([...calendarEvents, newEvent]);
+    }
+
+    const onAccordionToggle = () => {
+
+        const newState = activeAccordian !== "appointments" ? "appointments" : null;
+        setActiveAccordian(newState);
+    }
+
     return (
         <>
              {parsedId === "new" || selectedCase.id !== undefined ? 
@@ -116,8 +134,8 @@ const parsedId = id !== undefined ? id : "";
                             )}
                         </div>
 
-                        <Tabs defaultActiveKey="profile" className="mb-3">
-                            <Tab eventKey="profile" title="Profile">
+                        <Tabs defaultActiveKey="Case Details" className="mb-3">
+                            <Tab eventKey="Case Details" title="Case Details">
                                 <Form.Group className="mb-3">
                                     <Form.Label>Case Title</Form.Label>
                                     <Form.Control 
@@ -130,6 +148,18 @@ const parsedId = id !== undefined ? id : "";
                                     />
                                 </Form.Group>
 
+                            </Tab>
+                            <Tab eventKey="Schedule Hearing" title="Schedule Hearing">
+                                <CalendarComponent 
+                                    currentView={currentView} 
+                                    events={calendarEvents} 
+                                    onNavigate={handleNavigate} 
+                                    onView={setCurrentView}
+                                    onAddAppointment={onAddAppointment} 
+                                    currentDate={currentDate} 
+                                    activeAccordian={activeAccordian}
+                                    onAccordionToggle={onAccordionToggle}
+                                    />
                             </Tab>
                         </Tabs>
                     </Form>

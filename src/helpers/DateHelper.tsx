@@ -14,6 +14,13 @@ export const getCalendarDate = (date?: Date) => {
     return calendarDate;
 }
 
+export const getDayOfTheWeek = (date: Date) => {
+
+    const days = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
+
+    return days[ date.getDay() ];
+}
+
 export const dateIsInThePast = (date: Date) => {
 
     var today = new Date();
@@ -22,6 +29,29 @@ export const dateIsInThePast = (date: Date) => {
     const result = today > dateToCheck;
 
     return result;
+}
+
+export const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
+
+export const addDays = (date: Date, days: number) => {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    result.setHours(9);
+    result.setMinutes(0);
+    result.setSeconds(0);
+    return result;
+  }
+
+  export const addHours = (date: Date, hours: number) => {
+    var result = new Date(date);
+    result.setHours(result.getHours() + hours);
+    return result;
+  }
+
+
+export const getDayFromDate = (date: Date) => {
+
+    return getCalendarDate(date).split('-')[2]
 }
 
 export const dateTimeTryParse = (dateString: string): boolean => {

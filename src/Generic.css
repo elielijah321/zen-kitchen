@@ -80,3 +80,15 @@
     transform: rotate(0deg) translateX(25px);
     animation: l8-2 1s infinite linear;
   }
+
+  .appointment-btn{
+    margin-top: 10px !important;
+    margin-right: 20px !important;
+  }
+
+  .appointment-occupied-btn{
+    margin-top: 10px !important;
+    margin-right: 20px !important;
+    border: 0 !important;
+    width: 100px;
+  }
