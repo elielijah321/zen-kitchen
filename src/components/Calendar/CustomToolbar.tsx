@@ -20,9 +20,6 @@ const CustomToolbar: React.FC<CustomToolbarProps> = (props) => {
     props.onNavigate(action); // Default behavior
     props.onNavigateCustom(action); // Custom behavior from parent
 
-
-    console.log('heyyyyaaa');
-
   };
 
   const handleViewChange = (view: View) => {
@@ -36,17 +33,17 @@ const CustomToolbar: React.FC<CustomToolbarProps> = (props) => {
     <>
       <div className="rbc-toolbar">
         <span className="rbc-btn-group">
-          {/* <button type="button" onClick={() => handleNavigate('TODAY')}>Today</button> */}
-          <button type="button" onClick={() => handleNavigate('PREV')}>Back</button>
-          <button type="button" onClick={() => handleNavigate('NEXT')}>Next</button>
+          <button type="button" onClick={() => handleViewChange('day')}>Day</button>
+          <button type="button" onClick={() => handleViewChange('week')}>Week</button>
+          <button type="button" onClick={() => handleViewChange('month')}>Month</button>
         </span>
         <span className="rbc-toolbar-label">
           {props.label}
         </span>
         <span className="rbc-btn-group">
-          <button type="button" onClick={() => handleViewChange('day')}>Day</button>
-          <button type="button" onClick={() => handleViewChange('week')}>Week</button>
-          <button type="button" onClick={() => handleViewChange('month')}>Month</button>
+          {/* <button type="button" onClick={() => handleNavigate('TODAY')}>Today</button> */}
+          <button type="button" onClick={() => handleNavigate('PREV')}>Back</button>
+          <button type="button" onClick={() => handleNavigate('NEXT')}>Next</button>
         </span>
       </div>
 
