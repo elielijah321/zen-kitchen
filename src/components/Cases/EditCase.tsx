@@ -114,6 +114,21 @@ function EditCase() {
         setActiveAccordian(newState);
     }
 
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files;
+    
+        if(file){
+            let reader = new FileReader(); 
+            reader.readAsDataURL(file[0]);
+    
+            reader.onload = () => {
+
+                setSelectedCase({...selectedCase, file: reader.result});
+                setHasBeenEdited(true);
+            }
+        }
+    }
+
     return (
         <>
              {parsedId === "new" || selectedCase.id !== undefined ? 
@@ -147,7 +162,6 @@ function EditCase() {
                                     required
                                     />
                                 </Form.Group>
-
                             </Tab>
                             <Tab eventKey="Schedule Hearing" title="Schedule Hearing">
                                 <CalendarComponent 
@@ -160,6 +174,16 @@ function EditCase() {
                                     activeAccordian={activeAccordian}
                                     onAccordionToggle={onAccordionToggle}
                                     />
+                            </Tab>
+                            <Tab eventKey="Documents" title="Documents">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>File</Form.Label>
+                                        <Form.Control 
+                                        type="file"
+                                        onChange={handleFileChange} 
+                                        accept='application/pdf'
+                                        />
+                                </Form.Group>
                             </Tab>
                         </Tabs>
                     </Form>

@@ -24,12 +24,19 @@ namespace Project.Function
             var data = JsonConvert.DeserializeObject<UpdateCaseRequestModel>(requestBody);
             var repo = RepositoryWrapper.GetRepo();
 
+            var id = string.Empty;
+
             if (data.Id == Guid.Empty)
             {
-                repo.AddCase(data);
+                id = repo.AddCase(data);
             }else
             {
-                repo.UpdateCase(data);
+                id = repo.UpdateCase(data);
+            }
+
+            if (FileHelper.ShouldUploadFile(data.File))
+            {
+                FileHelper.UploadImage(id, data.File);
             }
 
             return new OkObjectResult(data);

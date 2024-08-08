@@ -6,7 +6,7 @@ namespace AzureFunctions.Mappers
 {
     public static class CaseMapper
     {
-        public static Case ToStudent(this UpdateCaseRequestModel caseRequest){
+        public static Case ToCase(this UpdateCaseRequestModel caseRequest){
             return new Case
             {
                 Id = caseRequest.Id,

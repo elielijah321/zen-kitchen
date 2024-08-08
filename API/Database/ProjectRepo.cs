@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AzureFunctions.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Project.Function;
 
@@ -48,18 +49,28 @@ namespace AzureFunctions.Database
            return GetAllDefendants().FirstOrDefault(x => x.Email == email);
         }
 
-      public void AddCase(Case newCase)
-      {
-         _ctx.Cases.Add(newCase);
-         SaveAll();
-      }
+         public string AddCase(UpdateCaseRequestModel caseRequest)
+         {
+            var newCase = caseRequest.ToCase();
 
-        public void UpdateCase(Case newCase)
+            _ctx.Cases.Add(newCase);
+            SaveAll();
+
+            var caseId = newCase.Id.ToString();
+
+            return caseId;
+         }
+
+        public string UpdateCase(UpdateCaseRequestModel caseRequest)
         {
-           var caseToUpdate = _ctx.Cases.FirstOrDefault(c => c.Id == newCase.Id);
-           caseToUpdate.Title = newCase.Title;
+            var newCase = caseRequest.ToCase();
 
-           SaveAll();
+            var caseToUpdate = _ctx.Cases.FirstOrDefault(c => c.Id == newCase.Id);
+            caseToUpdate.Title = newCase.Title;
+
+            SaveAll();
+
+            return newCase.Id.ToString();
         }
 
         public IEnumerable<Case> GetAllCases()
