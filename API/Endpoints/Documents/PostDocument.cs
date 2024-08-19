@@ -11,25 +11,22 @@ using Newtonsoft.Json;
 
 namespace Project.Function
 {
-    public static class PostCase
+    public static class PostDocument
     {
-        [FunctionName("PostCase")]
+        [FunctionName("PostDocument")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("PostCase function processed a request.");
+            log.LogInformation("PostDocument function processed a request.");
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            var data = JsonConvert.DeserializeObject<UpdateCaseRequestModel>(requestBody);
-            var repo = RepositoryWrapper.GetRepo();
+            DocumentObject data = JsonConvert.DeserializeObject<DocumentObject>(requestBody);
+            data.Id = $"{data.CaseId}-{GuidGenerator.CreateGuid()}";
 
-            if (data.Id == Guid.Empty)
+            if (FileHelper.ShouldUploadFile(data.File))
             {
-                repo.AddCase(data);
-            }else
-            {
-                repo.UpdateCase(data);
+                FileHelper.UploadFile(data);
             }
 
             return new OkObjectResult(data);

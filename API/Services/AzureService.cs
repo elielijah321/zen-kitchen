@@ -4,6 +4,7 @@ using Azure.Storage.Blobs.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Project.Function
@@ -30,17 +31,25 @@ namespace Project.Function
             return content;
         }
 
-        public static async Task<List<string>> GetBlobs()
+        public static async Task<List<DocumentObject>> GetBlobs()
         {
             BlobContainerClient containerClient = GetContainerClient();
-            List<string> fileURLs = new List<string>();
+            List<DocumentObject> documents = new List<DocumentObject>();
 
             try
             {
-                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync())
+                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(BlobTraits.Metadata))
                 {
                     string fileURL = $"{URL_PREFIX}{blobItem.Name}";
-                    fileURLs.Add(fileURL);
+                    var id = blobItem.Metadata["id"];
+                    var name = blobItem.Metadata["name"];
+
+                    var documentObject = new DocumentObject();
+                    documentObject.Id = id;
+                    documentObject.Name = name;
+                    documentObject.Url = fileURL;
+                    
+                    documents.Add(documentObject);
                 }
             }
             catch (RequestFailedException ex)
@@ -48,17 +57,26 @@ namespace Project.Function
                 Console.WriteLine($"Error listing blobs: {ex.Message}");
             }
 
-            return fileURLs;
+            return documents;
         }
         
 
-        public static async Task UploadImageToBlobAsync(string imageName, byte[] byteArray)
+        public static async Task UploadImageToBlobAsync(string imageId, string imageName, byte[] byteArray)
         {
-            BlobClient blobClient = GetContainerClient().GetBlobClient(imageName);
+            BlobClient blobClient = GetContainerClient().GetBlobClient(imageId);
+
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                Metadata = new Dictionary<string, string> {
+                    { "id", imageId },
+                    { "name", imageName },
+                }
+            };
 
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
-                await blobClient.UploadAsync(stream, true);
+                // await blobClient.UploadAsync(stream, true);
+                await blobClient.UploadAsync(stream, options);
                 blobClient.Uri.ToString();
             }
         }

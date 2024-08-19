@@ -14,6 +14,7 @@ import ForgotPasswordPage from './Authentication/ForgotPassword';
 import LoginPage from './Authentication/LoginPage';
 import CasesPage from '../Cases/CasesPage';
 import EditCase from '../Cases/EditCase';
+import DocumentSearch from '../Documents/DocumentSearch';
 
 const SideMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,8 @@ const SideMenu: React.FC = () => {
   [
       { name: 'Home', icon: NestBox, path: '/home' },
       { name: 'Defendants', icon: Profile, path: '/Defendants' },
-      { name: 'Cases', icon: Money, path: '/Cases' }
+      { name: 'Cases', icon: Money, path: '/Cases' },
+      { name: 'Documents', icon: Money, path: '/Documents' }
   ];
 
   const isAuthenticated = () => {
@@ -70,6 +72,8 @@ const SideMenu: React.FC = () => {
 
               <Route path="/Cases" element={navigateToPageIfAuthenticated(<CasesPage />)} />
               <Route path="/Case/:id" element={navigateToPageIfAuthenticated(<EditCase />)} />
+
+              <Route path="/Documents" element={navigateToPageIfAuthenticated(<DocumentSearch />)} />
 
               <Route path="/login" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />

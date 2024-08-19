@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
 
 namespace Project.Function
 {
@@ -23,25 +27,57 @@ namespace Project.Function
         }
 
 
-        public static async Task<List<string>> GetImages()
+        public static async Task<List<DocumentObject>> GetFiles(string caseID)
         {
-            return await AzureService.GetBlobs();
+            var allFiles = await AzureService.GetBlobs();
+
+            return allFiles.Where(f => f.Id.Contains(caseID)).ToList();
         }
 
 
-        public static async void UploadImage(string id, string data)
+        public static async void UploadFile(DocumentObject documentObject)
         {
-            var fileProperties = GetFileData(id, data);
+            var fileProperties = GetFileData(documentObject.Id, documentObject.File);
 
-            var fileName = fileProperties.Item1;
+            var fileId = fileProperties.Item1;
             var fileData = fileProperties.Item2;
 
-            await AzureService.UploadImageToBlobAsync(fileName, fileData);
+            await AzureService.UploadImageToBlobAsync(fileId, documentObject.Name, fileData);
+
+            var text = FileHelper.ExtractTextFromFile(fileData);
+
+            documentObject.Content = text;
+
+            await ElasticsearchHelper.CreateIndex(documentObject);
+            // await ElasticsearchHelper.GetDocument(id);
         }
 
-        public static bool ShouldUploadFile(string receipt)
+        private static string ExtractTextFromFile(byte[] pdfBytes)
         {
-            return !string.IsNullOrEmpty(receipt) && !receipt.Contains(AzureService.URL_PREFIX);
+            // byte[] pdfBytes = Convert.FromBase64String(data);
+            using (MemoryStream stream = new MemoryStream(pdfBytes))
+            using (PdfReader reader = new PdfReader(stream))
+            using (PdfDocument pdfDoc = new PdfDocument(reader))
+            {
+                string text = string.Empty;
+                for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
+                {
+                    text += GetTextFromPage(pdfDoc, i);
+                }
+
+                return text;
+            }
+        }
+
+        private static string GetTextFromPage(PdfDocument pdfDoc, int pageNumber)
+        {
+            var page = pdfDoc.GetPage(pageNumber);
+            return iText.Kernel.Pdf.Canvas.Parser.PdfTextExtractor.GetTextFromPage(page);
+        }
+
+        public static bool ShouldUploadFile(string file)
+        {
+            return !string.IsNullOrEmpty(file) && !file.Contains(AzureService.URL_PREFIX);
         }
 
         public static void DeleteImage(string receiptUrl)

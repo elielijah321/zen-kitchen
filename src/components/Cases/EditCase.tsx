@@ -9,11 +9,12 @@ import CalendarComponent from '../Calendar/CalendarComponent';
 import moment from 'moment';
 import { CalendarEvent } from '../../types/Calendar/CalendarEvent';
 import { addHours } from '../../helpers/DateHelper';
+import FilesComponent from './FilesComponent';
 
 function EditCase() {
 
     // const state = useSelector((state: RootState) => state.systemUser);
-    // const systemUser = state.systemUser;
+    // // const systemUser = state.systemUser;
 
     const [hasBeenEdited, setHasBeenEdited] = useState(false);
     const [validated, setValidated] = useState(false);
@@ -114,24 +115,9 @@ function EditCase() {
         setActiveAccordian(newState);
     }
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files;
-    
-        if(file){
-            let reader = new FileReader(); 
-            reader.readAsDataURL(file[0]);
-    
-            reader.onload = () => {
-
-                setSelectedCase({...selectedCase, file: reader.result});
-                setHasBeenEdited(true);
-            }
-        }
-    }
-
     return (
         <>
-             {parsedId === "new" || selectedCase.id !== undefined ? 
+            {parsedId === "new" || selectedCase.id !== undefined ? 
                 <div className='page'>
                     <h1>Edit Case</h1>
                     <Form noValidate validated={validated} onSubmit={event => handleSubmit(event)}>
@@ -176,14 +162,7 @@ function EditCase() {
                                     />
                             </Tab>
                             <Tab eventKey="Documents" title="Documents">
-                                <Form.Group className="mb-3">
-                                    <Form.Label>File</Form.Label>
-                                        <Form.Control 
-                                        type="file"
-                                        onChange={handleFileChange} 
-                                        accept='application/pdf'
-                                        />
-                                </Form.Group>
+                                <FilesComponent caseId={selectedCase.id} />
                             </Tab>
                         </Tabs>
                     </Form>

@@ -92,3 +92,25 @@
     border: 0 !important;
     width: 100px;
   }
+
+  .btn-group-top-right {
+    float: right;
+    margin-bottom: 50px;
+    /* margin-right: 20px;
+    margin-top: 25px; */
+  }
+
+  .float-right{
+    float: right;
+  }
+
+  .float-left{
+    float: left;
+  }
+
+
+  .case-document-actions-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }

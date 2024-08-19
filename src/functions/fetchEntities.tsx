@@ -1,9 +1,10 @@
 import { Case } from "../types/Case/Case";
 import { Defendant } from "../types/Defendant/Defendant";
+import { DocumentObject } from "../types/Documents/DocumentObject";
 
 
-const domain = "https://court-app-template.azurewebsites.net/api"; 
-// const domain = "http://localhost:7071/api";
+// const domain = "https://court-app-template.azurewebsites.net/api"; 
+const domain = "http://localhost:7071/api";
 
 const getHeaders = () => {
    return  {
@@ -76,6 +77,26 @@ export const getAllCases = async () => {
 export const searchAllCases = async (searchTerm: string) => {
     const response = await fetch(`${domain}/GetAllCases?searchTerm=${searchTerm}`, getGETOptions())
         .then(response => response.json() as Promise<Case[]>);
+
+    return response;
+}
+
+export const searchAllDocuments = async (searchTerm: string) => {
+    const response = await fetch(`${domain}/GetAllDocuments?searchTerm=${searchTerm}`, getGETOptions())
+        .then(response => response.json() as Promise<DocumentObject[]>);
+
+    return response;
+}
+
+export const searchAllCaseDocuments = async (caseId: string, searchTerm: string) => {
+    const response = await fetch(`${domain}/GetCaseDocuments/${caseId}?searchTerm=${searchTerm}`, getGETOptions())
+        .then(response => response.json() as Promise<DocumentObject[]>);
+
+    return response;
+}
+
+export const postDocument = async (documentObject: DocumentObject) => {
+    const response = await fetch(`${domain}/PostDocument`, getPOSTOptions(documentObject));
 
     return response;
 }
