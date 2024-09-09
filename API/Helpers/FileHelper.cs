@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas.Parser;
 
 namespace Project.Function
 {
@@ -26,7 +25,6 @@ namespace Project.Function
             return (fileName, dataBytes);
         }
 
-
         public static async Task<List<DocumentObject>> GetFiles(string caseID)
         {
             var allFiles = await AzureService.GetBlobs();
@@ -34,21 +32,27 @@ namespace Project.Function
             return allFiles.Where(f => f.Id.Contains(caseID)).ToList();
         }
 
+        public static async Task<List<DocumentObject>> GetMultipleFiles(IEnumerable<string> ids)
+        {
+            var allFiles = await AzureService.GetBlobs();
 
-        public static async void UploadFile(DocumentObject documentObject)
+            return allFiles.Where(f => ids.Any(i => f.Id == i)).ToList();
+        }
+
+        public static async Task UploadFile(DocumentObject documentObject)
         {
             var fileProperties = GetFileData(documentObject.Id, documentObject.File);
 
             var fileId = fileProperties.Item1;
             var fileData = fileProperties.Item2;
 
-            await AzureService.UploadImageToBlobAsync(fileId, documentObject.Name, fileData);
+            await AzureService.UploadImageToBlobAsync(documentObject.Id, documentObject.Name, fileData);
 
-            var text = FileHelper.ExtractTextFromFile(fileData);
+            // var text = FileHelper.ExtractTextFromFile(fileData);
 
-            documentObject.Content = text;
+            // documentObject.Content = text;
 
-            await ElasticsearchHelper.CreateIndex(documentObject);
+            // ElasticsearchHelper.CreateIndex(documentObject);
             // await ElasticsearchHelper.GetDocument(id);
         }
 
@@ -80,9 +84,11 @@ namespace Project.Function
             return !string.IsNullOrEmpty(file) && !file.Contains(AzureService.URL_PREFIX);
         }
 
-        public static void DeleteImage(string receiptUrl)
+        public static async Task DeleteImage(string fileId)
         {
-            AzureService.DeleteFile(receiptUrl);
+            AzureService.DeleteFile($"{fileId}.pdf");
+
+            await ElasticsearchHelper.DeleteDocument(fileId);
         }
     }
 }

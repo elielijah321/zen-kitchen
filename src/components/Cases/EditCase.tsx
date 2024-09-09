@@ -14,7 +14,16 @@ import FilesComponent from './FilesComponent';
 function EditCase() {
 
     // const state = useSelector((state: RootState) => state.systemUser);
+
     // // const systemUser = state.systemUser;
+
+
+    const getTabKeyFromHash = (hash: string) => {
+        var key = hash.replace('#', '') || "Case Details";
+
+        return key;
+      };
+
 
     const [hasBeenEdited, setHasBeenEdited] = useState(false);
     const [validated, setValidated] = useState(false);
@@ -26,6 +35,8 @@ function EditCase() {
     const [activeAccordian, setActiveAccordian] = useState<string | null>(null);
 
     const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
+
+    const [activeKey, setActiveKey] = useState<string>(getTabKeyFromHash(location.hash));
 
     const navigate = useNavigate();
 
@@ -115,6 +126,7 @@ function EditCase() {
         setActiveAccordian(newState);
     }
 
+
     return (
         <>
             {parsedId === "new" || selectedCase.id !== undefined ? 
@@ -135,7 +147,7 @@ function EditCase() {
                             )}
                         </div>
 
-                        <Tabs defaultActiveKey="Case Details" className="mb-3">
+                        <Tabs defaultActiveKey={activeKey} className="mb-3">
                             <Tab eventKey="Case Details" title="Case Details">
                                 <Form.Group className="mb-3">
                                     <Form.Label>Case Title</Form.Label>

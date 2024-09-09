@@ -63,14 +63,15 @@ namespace Project.Function
 
         public static async Task UploadImageToBlobAsync(string imageId, string imageName, byte[] byteArray)
         {
-            BlobClient blobClient = GetContainerClient().GetBlobClient(imageId);
+            BlobClient blobClient = GetContainerClient().GetBlobClient($"{imageId}.pdf");
 
             BlobUploadOptions options = new BlobUploadOptions
             {
                 Metadata = new Dictionary<string, string> {
                     { "id", imageId },
                     { "name", imageName },
-                }
+                },
+                HttpHeaders = new BlobHttpHeaders { ContentType = "application/pdf" }
             };
 
             using (MemoryStream stream = new MemoryStream(byteArray))
@@ -94,11 +95,9 @@ namespace Project.Function
             return containerClient;
         }
 
-        public static void DeleteFile(string receipt)
+        public static void DeleteFile(string file)
         {
-            receipt = receipt.Split(URL_PREFIX)[1];
-
-            BlobClient blobClient = GetContainerClient().GetBlobClient(receipt);
+            BlobClient blobClient = GetContainerClient().GetBlobClient(file);
 
             blobClient.Delete();
         }

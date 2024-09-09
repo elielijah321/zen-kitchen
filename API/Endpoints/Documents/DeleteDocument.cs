@@ -11,24 +11,20 @@ using Newtonsoft.Json;
 
 namespace Project.Function
 {
-    public static class PostDocument
+    public static class DeleteDocument
     {
-        [FunctionName("PostDocument")]
+        [FunctionName("DeleteDocument")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("PostDocument function processed a request.");
+            log.LogInformation("DeleteDocument function processed a request.");
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            DocumentObject data = JsonConvert.DeserializeObject<DocumentObject>(requestBody);
-            data.Id = $"{data.CaseId}-{GuidGenerator.CreateGuid()}";
+            string data = JsonConvert.DeserializeObject<string>(requestBody);
 
-            if (FileHelper.ShouldUploadFile(data.File))
-            {
-                await FileHelper.UploadFile(data);
-            }
-
+            await FileHelper.DeleteImage(data);
+            
             return new OkObjectResult(data);
         }
     }

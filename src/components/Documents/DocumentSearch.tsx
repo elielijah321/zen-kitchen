@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { Form, Table } from 'react-bootstrap';
+import { Button, Form, Table } from 'react-bootstrap';
 import { searchAllDocuments } from '../../functions/fetchEntities';
 import { DocumentObject } from '../../types/Documents/DocumentObject';
 
@@ -50,7 +50,8 @@ function DocumentSearch() {
               <Table striped hover responsive>
                 <thead>
                     <tr>
-                        <th>Title</th>
+                        <th>File Name</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,7 +59,16 @@ function DocumentSearch() {
 
                       return (
                         <tr key={_document.id}>
-                            <td className='case-title'>{_document.id}</td>
+                            <td className='case-name'>{_document.name}</td>
+                            <td className='document-link'>
+                              {
+                                <Button>
+                                    <a className='view-document-link' href={_document.url} target='_blank'>
+                                        View
+                                    </a>
+                                </Button>
+                              }
+                            </td>
                         </tr>
                       )
                     })}

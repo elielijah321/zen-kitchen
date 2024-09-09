@@ -30,7 +30,7 @@ const SideMenu: React.FC = () => {
       { name: 'Home', icon: NestBox, path: '/home' },
       { name: 'Defendants', icon: Profile, path: '/Defendants' },
       { name: 'Cases', icon: Money, path: '/Cases' },
-      { name: 'Documents', icon: Money, path: '/Documents' }
+      // { name: 'Documents', icon: Money, path: '/Documents' }
   ];
 
   const isAuthenticated = () => {

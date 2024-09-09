@@ -114,3 +114,9 @@
     justify-content: space-between;
     width: 100%;
   }
+
+
+  .view-document-link{
+    text-decoration: none;
+    color: #FFF !important;
+  }

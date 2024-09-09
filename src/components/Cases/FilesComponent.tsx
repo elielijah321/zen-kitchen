@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Form, Modal, Table } from 'react-bootstrap';
 import { DocumentObject } from '../../types/Documents/DocumentObject';
 import { useNavigate } from 'react-router-dom';
-import { postDocument, searchAllCaseDocuments } from '../../functions/fetchEntities';
+import { deleteDocument, postDocument, searchAllCaseDocuments } from '../../functions/fetchEntities';
 
 const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
 
@@ -65,13 +65,11 @@ const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
 
             await postDocument(caseDocument);
 
-            // if (hasBeenEdited) {
-            //     // selectedStudent.updatedBy = systemUser.displayName;
-            //     await postCase(selectedCase);
-            // }
-
-
-            // navigate('/Cases', {replace: true});
+            await searchAllCaseDocuments(caseId, '')
+            .then(data => {
+                setDocuments(data);
+                handleClose();
+            });
         }
     
     };
@@ -82,7 +80,14 @@ const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
     
         // searchAllCaseDocuments(name)
         //     .then(document => setDocuments(document));
-      }
+    }
+
+    const handleDelete = async (documentId: string) => {
+        await deleteDocument(documentId).then(() => {
+            searchAllCaseDocuments(caseId, '')
+                    .then(data => setDocuments(data));
+        });
+    }
 
     return (
         <>
@@ -147,10 +152,6 @@ const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
                 </div>
 
             </div>
-
-            <div>
-                <iframe src="https://courtsystem.blob.core.windows.net/documents/67c437e2-00d0-4278-8ba3-f9e486d0e78c-2466663b-eb9a-47d2-bab5-9bd7240da025.pdf" width="100%" height="500px" />
-            </div>
                 
             {documents !== undefined && documents.length > 0 ?
             (
@@ -159,17 +160,28 @@ const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {documents.map((_document: DocumentObject) => {
 
-                            console.log(_document);
-
                         return (
                             <tr key={_document.id}>
                                 <td className='case-title'>{_document.name}</td>
-                                {/* <td className='case-title'>{_document.id}</td> */}
+                                <td>
+                                    <Button>
+                                        <a className='view-document-link' href={_document.url} target='_blank'>
+                                            View
+                                        </a>
+                                    </Button>
+                                </td>
+                                <td>
+                                    <Button variant='danger' onClick={e => handleDelete(_document.id)}>
+                                        Delete
+                                    </Button>
+                                </td>
                             </tr>
                         )
                         })}

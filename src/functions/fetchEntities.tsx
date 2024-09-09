@@ -3,8 +3,8 @@ import { Defendant } from "../types/Defendant/Defendant";
 import { DocumentObject } from "../types/Documents/DocumentObject";
 
 
-// const domain = "https://court-app-template.azurewebsites.net/api"; 
-const domain = "http://localhost:7071/api";
+const domain = "https://court-app-template.azurewebsites.net/api"; 
+// const domain = "http://localhost:7071/api";
 
 const getHeaders = () => {
    return  {
@@ -85,6 +85,8 @@ export const searchAllDocuments = async (searchTerm: string) => {
     const response = await fetch(`${domain}/GetAllDocuments?searchTerm=${searchTerm}`, getGETOptions())
         .then(response => response.json() as Promise<DocumentObject[]>);
 
+    console.log(response);
+
     return response;
 }
 
@@ -97,6 +99,12 @@ export const searchAllCaseDocuments = async (caseId: string, searchTerm: string)
 
 export const postDocument = async (documentObject: DocumentObject) => {
     const response = await fetch(`${domain}/PostDocument`, getPOSTOptions(documentObject));
+
+    return response;
+}
+
+export const deleteDocument = async (documentId: string) => {
+    const response = await fetch(`${domain}/DeleteDocument`, getPOSTOptions(documentId));
 
     return response;
 }
