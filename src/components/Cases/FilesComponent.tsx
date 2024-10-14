@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Form, Modal, Table } from 'react-bootstrap';
 import { DocumentObject } from '../../types/Documents/DocumentObject';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { deleteDocument, postDocument, searchAllCaseDocuments } from '../../functions/fetchEntities';
 
 const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
@@ -9,7 +9,7 @@ const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
     // const state = useSelector((state: RootState) => state.systemUser);
     // const systemUser = state.systemUser;
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
@@ -18,7 +18,7 @@ const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
       setShowModal(!showModal);
     }
 
-    const [validated, setValidated] = useState(false);
+    // const [validated, setValidated] = useState(false);
     const [caseDocument, setCaseDocument] = useState<DocumentObject>({caseId: caseId} as DocumentObject);
     const [documents, setDocuments] = useState<DocumentObject[] | undefined>(undefined);
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -100,7 +100,8 @@ const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
                 </Modal.Header>
                 <Modal.Body>
                 <div>
-                    <Form noValidate validated={validated} >
+                    <Form noValidate  >
+                    {/* validated={validated} */}
 
                         <Form.Group className="mb-3">
                             <Form.Label>File Name</Form.Label>
@@ -178,7 +179,7 @@ const FilesComponent: React.FC<{caseId: string}> = ({caseId}) => {
                                     </Button>
                                 </td>
                                 <td>
-                                    <Button variant='danger' onClick={e => handleDelete(_document.id)}>
+                                    <Button variant='danger' onClick={() => handleDelete(_document.id)}>
                                         Delete
                                     </Button>
                                 </td>

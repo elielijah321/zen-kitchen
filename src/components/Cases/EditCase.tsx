@@ -18,11 +18,11 @@ function EditCase() {
     // // const systemUser = state.systemUser;
 
 
-    const getTabKeyFromHash = (hash: string) => {
-        var key = hash.replace('#', '') || "Case Details";
+    // const getTabKeyFromHash = (hash: string) => {
+    //     var key = hash.replace('#', '') || "Case Details";
 
-        return key;
-      };
+    //     return key;
+    //   };
 
 
     const [hasBeenEdited, setHasBeenEdited] = useState(false);
@@ -36,7 +36,7 @@ function EditCase() {
 
     const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
 
-    const [activeKey, setActiveKey] = useState<string>(getTabKeyFromHash(location.hash));
+    // const [activeKey, setActiveKey] = useState<string>(getTabKeyFromHash(location.hash));
 
     const navigate = useNavigate();
 
@@ -147,7 +147,7 @@ function EditCase() {
                             )}
                         </div>
 
-                        <Tabs defaultActiveKey={activeKey} className="mb-3">
+                        <Tabs defaultActiveKey={"Case Details"} className="mb-3">
                             <Tab eventKey="Case Details" title="Case Details">
                                 <Form.Group className="mb-3">
                                     <Form.Label>Case Title</Form.Label>
