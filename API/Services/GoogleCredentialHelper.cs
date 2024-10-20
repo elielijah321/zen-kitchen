@@ -1,32 +1,30 @@
-using System;
 using System.IO;
 using System.Text;
-using System.Threading;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Calendar.v3;
-using Google.Apis.Util.Store;
+
+using Google.Apis.Sheets.v4;
 
 namespace Company.Function
 {
     public static class GoogleCredentialHelper
     {
-        static string[] Scopes = { CalendarService.Scope.Calendar };
+        static string[] Scopes = { SheetsService.Scope.Spreadsheets };
 
         public static GoogleCredential GetCredentials()
         {
             // string credentialsJson = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIAL");
 
-            string credentialsJson = "{\"type\":\"service_account\",\"project_id\":\"yoruba-exe\",\"private_key_id\":\"3e28bc9a60c6844c359c5985a642527cdce61921\",\"private_key\":\"-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCkaAkHaslWeO19\\nHgeFaMQi00r1WZJDd1nM2fIvp+Sgda8ymEIAKe/Tps7xdvM1+dieC2oRnLU2rbnh\\n6ZaVp+PoeyZoqDnq0Xy6nk/0mCX7Rn+ehvf6bSD1ogmRFPsGBkCBg9yFztIe9QgB\\nLsUi5BHFDyDI9ZtQpvQals8bIjP+FdMXQh0HFlDe8Qy7McDKRaOnGNhX1wmjyhuC\\nODX00GmVhjOztphW+6MMIE78KIHMLP33Jvr5D3+sI6rKQYScCpNcKW6CAUP3v4AJ\\nAdFodAt3vGOyxShzzzURWzwYZQfhFZD4tq7Sz/ehA3om82N2ae+xb/lMDYR+Xblf\\nb8SiHKXHAgMBAAECggEABouBuILeywt7YNy+LehyznQc6tGLChaJQ6d1hcIoTt8A\\nf4IiNoF047cjS+eRXRe6MOiBa3wSlr+pw72Z2hFZ+FpWuBniXF/EmGVPB4y7DlrL\\nH9N9scGAa2bs/JKaP64mCUHnmIgYQ1U74VgsTuxHbNHiWz2z1i0fUKOqUQk2iqnh\\nYjGzMzBu5pKTzq/t4v39rx/bEwH3b+RN6KFEEnX5wsRbvWO8Wx8R+HyFnuNa/g7B\\n33iOeYwKk3vzQVgSmJX27QM5dHJNp+glhvfisWfGtBOnwKRC47COa9lzFQJoau3I\\nLPaWYMn+ZPif5vLYSHh5k0PjFJHAdz1SxgOb572nQQKBgQDcT9a8fAXoG4ktTtTG\\nNSCRRwjgsEdlY80qCCvbSuae1TUJLgpT/Uu+3UphPBiF8dwcOS3Pjvco5cyH6NuW\\nwy/fkacjBiamxQzaMK/HuP5Ha1OAq2/koeEBWlDUdyXoFmSpFRLPphPcZ7yS+Ndw\\ntyxY+XJArPr9+povzi60NbiP4QKBgQC/Cdb6aMHnJMs7ocRw7OC2bHiLu95Krba1\\nI2O2PP5HGM+xkAb04ri2mYs/WPBNWf9ATybNNQ8BW28agt/mhX5q44PqxJYETbNj\\n5VSGLGvYRqiuzHVllCsG1V97syehkvAvJpUeuIWhdTpB/BeCkBFUzmpoBL48PL6I\\nKRv7ZBgKpwKBgGlF7UJbsSbcIYx44stjj5Bb9S4IjdUw/1RaWzqKa/DxyEn+qgjA\\nPHWToHseEEnQ7HDAEdfgZNIyHK3E40kDM9kM7GScB9QgzKdmJFi3WSofauNNCEaj\\n47SVx5H+7SodqTPyUe7PWSY0m7NPHQNLQ/GwIJwvDDBYk1zMlRyfnvWBAoGAKdRv\\nvBjgDEqkLYR4TPmxIoCRzJbwT43F6de755VnYA3wvEJ7I3fZVjI8qTxCMc249E3g\\ngyJRDM0GgNmTSRiF28XBhtBQwNR6qS732QE1BABEwzGFqx5MZYynAaDy1pAkA08B\\na96fdAEFJpmaVD5TbSxdZDVVqj7qwUmvFNaP5RUCgYEAyBSw8AWD/moc0ouch+lX\\nr9Kq0sxJ6HZzilmw2EzAT4vqBH/Ovt6+WCz4gFTYfpas5SmP2gLTJexraXzdAwUV\\n/7Stn4A466L//ldkDvTLXndZxgWaR0kbmMIZpyGqPWaxC5yjjoGEu+Wu9nCBUJqI\\ncF1lqpw5atfN51T1ZhS8L1g=\\n-----END PRIVATE KEY-----\\n\",\"client_email\":\"yoruba@yoruba-exe.iam.gserviceaccount.com\",\"client_id\":\"110122233450973586117\",\"auth_uri\":\"https://accounts.google.com/o/oauth2/auth\",\"token_uri\":\"https://oauth2.googleapis.com/token\",\"auth_provider_x509_cert_url\":\"https://www.googleapis.com/oauth2/v1/certs\",\"client_x509_cert_url\":\"https://www.googleapis.com/robot/v1/metadata/x509/yoruba%40yoruba-exe.iam.gserviceaccount.com\",\"universe_domain\":\"googleapis.com\"}";
-
+            string credentialsJson = "{\"type\":\"service_account\",\"project_id\":\"aremusoftwaresolutions\",\"private_key_id\":\"6386ab5de8b6b7a4a5d80395e5eafde726ae8862\",\"private_key\":\"-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDpJY/AgBabwiUA\noqRubH5QB37I6JzgdnhrlWdO3OsElftxjPrMHNm5W6Q4aWkQXSSVkdAsMZ/+Z3Lt\nGoSAtkcaYjK+CeCthHAHYBUVNaSEXs0wdU0Yd6OE9rXOA2FDjnE0h26w467i4aQH\nA/J6BSHw4ooSHxW8WxqMKcvE+CX0IcIj0M+DwJH5nZZH3/JYxVCCQDIG9UG9w6ON\nw+cSDzOwo0Lx0kohSZ7vUxJWDUOp/r84u1QHpYyaM09RBFVLhx9F6OvlwFgH+D2k\nVWgrPvuv10Vy2xX+viO1hIv2d4Rg8iJEmpJGqgYayLbnk0pP2XmS+3xfOeYYP3Hp\nh+IIq37jAgMBAAECggEAPtJTMMCS1vdyNwCcI/Dx/Ch43jPniYgCnKKOSq62WO78\n6LTfIz6m4A40asrkd3dRk0fN+wqIHOnNCtx5VaFH+XD6UUCiHL8x3JrkM2nX4Z8V\n1PfWhUA/fGVpyZAZljV8hXX0uo8vIY1BQG6s2HonkhvIrmdX2QAHYDsm3/UpbOVj\n/5U66YrLKD/sStRvRh33+xeHfGqKu4NrY7z9FXRw/d49uE1kwEOUqr/rd9vO6mo1\nik3xLu19lpDXhx34651IWsqeblj6bwZqJTsCUyegHBJcXppcLTQaMUllQpYmVBOU\nkmhQ3DhCQAPEiL0jrm0/sBqH9bIjDBllgdeUD8p44QKBgQD+rte1DI0oM3aGuddQ\nzrtgOq3POOAlGofAnv77v1VXLkOoeoV/psYbSrnlD5ARJZi0qfW11za/qBGSTVEG\nNZaoMvxn+HWJY6nDKo6V76goFozcj9xgUtLwFJxCZMnq6Nj7PbyPdQyNLl3dh+qZ\nm2bqKCq/FOBoj7FElulAcXsVcwKBgQDqWjVjfVZXKNEoteACYnzlsiyfx5KudfGM\nSF5qHugZkMeq9J+neT9os/iT2ATcuLdIQ2y+wELH15TxiYN/bJk87QtCi+zmVGM4\nkEm7+kvJeEn7n9l0t6vyNozGeWeJk8nfzc8pj6cXaebkCTgLKDS3CDRgGfFzPLr6\nYJfn8/YU0QKBgQD3EfNdRnHiIBrKFJvXXtbUQdjAATMhi51KtnQzEajezJkCZun/\nrnDdpR62IuTmXYzJJ2ChKcmJIKj7P1ptJaukPOI0kwqjYDYeibiNqFN/oHDCwCVQ\npMjR84yrtE9WPtHQ2lGE8k5c4DBbazGiFuo+Gv1tJfmWNmAIZEagJ/b6FQKBgQCU\nA0WVAKR3iCASRkylNO8NY+srPzE1XuigYVTAUaTmALsbDkWH0NxrlL97IQRxI3ke\n+vbDw0pqTY6UvvV+lWhzQoPKE/Ybw1CnePoY74zOQlr3wY3mWdsPr8RZ1nO+QMlP\nwP0GkuRFtW1OuUPcSBiDQXtS9w+4aLLvT/KhXUQfAQKBgQC8EJQiFTdcJXDMhMlC\niHyoEbWl8gBJHhbKMYeqT/Ig3pnnOSB+HBNHPdoFwwxI4lw2cBWxaalKEGlnYgsj\ndsorWExuB/ru+nISQWR8yp4lyHHfEEfJJ5ebPygOJam6XyfIDE/hFp8AncLi2tpT\nGazMhbpFyzxFWXWuAkxELo0dPA==\n-----END PRIVATE KEY-----\n\",\"client_email\":\"aremu-software@aremusoftwaresolutions.iam.gserviceaccount.com\",\"client_id\":\"103275707152368667426\",\"auth_uri\":\"https://accounts.google.com/o/oauth2/auth\",\"token_uri\":\"https://oauth2.googleapis.com/token\",\"auth_provider_x509_cert_url\":\"https://www.googleapis.com/oauth2/v1/certs\",\"client_x509_cert_url\":\"https://www.googleapis.com/robot/v1/metadata/x509/aremu-software%40aremusoftwaresolutions.iam.gserviceaccount.com\",\"universe_domain\":\"googleapis.com\"}";
             byte[] byteArray = Encoding.ASCII.GetBytes(credentialsJson);
 
             using (var stream = new MemoryStream(byteArray))
             {
                 // Create GoogleCredential from the stream
                 return GoogleCredential.FromStream(stream)
-                                        .CreateScoped(Scopes)
-                                        .CreateWithUser("elijah@aremusoftwaresolutions.com");
+                                        .CreateScoped(Scopes);
             }
+
+            
         }
     }
 }

@@ -16,6 +16,7 @@ import FoodPage from '../Food/FoodPage';
 import EditIngredient from '../Food/Ingredient/EditIngredient';
 import EditRecipe from '../Food/Recipes/EditRecipe';
 import EditMenu from '../Food/Menu/EditMenu';
+import OrderPage from '../Orders/OrderPage';
 
 const SideMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +31,7 @@ const SideMenu: React.FC = () => {
   [
       { name: 'Home', icon: NestBox, path: '/home' },
       { name: 'Food', icon: Profile, path: '/Food' },
-      // { name: 'Cases', icon: Money, path: '/Cases' },
+      { name: 'Orders', icon: Money, path: '/Orders' },
       // { name: 'Documents', icon: Money, path: '/Documents' }
   ];
 
@@ -73,6 +74,8 @@ const SideMenu: React.FC = () => {
               <Route path="/Ingredient/:id" element={navigateToPageIfAuthenticated(<EditIngredient />)} />
               <Route path="/Recipe/:id" element={navigateToPageIfAuthenticated(<EditRecipe />)} />
               <Route path="/Menu/:id" element={navigateToPageIfAuthenticated(<EditMenu />)} />
+
+              <Route path="/Orders" element={navigateToPageIfAuthenticated(<OrderPage />)} />
 
               <Route path="/login" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />

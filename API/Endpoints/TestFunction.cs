@@ -4,24 +4,21 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-// using AzureFunctions.Models;
 
 namespace Project.Function
 {
-    public static class GetAllAllergies
+    public static class TestFunction
     {
-        [FunctionName("GetAllAllergies")]
+        [FunctionName("TestFunction")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("GetAllAllergies function processed a request.");
+            log.LogInformation("TestFunction function processed a request.");
 
-            var repo = RepositoryWrapper.GetRepo();
+            MenuHelper.UpdateMenuSpreadSheet();
 
-            var list = repo.GetAllAllergies();
-
-            return new OkObjectResult(list);
+            return new OkObjectResult("");
         }
     }
 }

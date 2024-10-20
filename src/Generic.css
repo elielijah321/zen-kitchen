@@ -132,3 +132,29 @@
     float: right;
     width: 100%; */
   }
+
+  .order-header > .accordion-header > .accordion-button {
+    padding: 0;
+    background-color: #cdd2cb;
+    margin-bottom: 20px;
+    border: #000 2px solid !important;
+
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgb(43 165 32 / 79%);
+  }
+
+  .order-header > .accordion-header > .form-check-input {
+    z-index: 1;
+  }
+
+  .order-header > .accordion-header > .accordion-button::after {
+    display: none;
+  }
+
+  .order-header-btn  {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  .cage-table.table{
+    border-color: #cdd2cb  !important;
+  }

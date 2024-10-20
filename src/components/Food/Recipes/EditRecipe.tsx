@@ -17,7 +17,7 @@ function EditRecipe() {
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
 
-    const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>();
+    const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
 
     const [searchTerm, setSearchTerm] = useState<string>("");
 

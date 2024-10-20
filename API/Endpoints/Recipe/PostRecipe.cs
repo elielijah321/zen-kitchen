@@ -32,6 +32,8 @@ namespace Project.Function
                 repo.UpdateRecipe(data);
             }
 
+            MenuHelper.UpdateMenuSpreadSheet();
+
             return new OkObjectResult(data);
         }
     }

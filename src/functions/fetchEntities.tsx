@@ -1,6 +1,7 @@
 import { Allergy } from "../types/Allergy/Allergy";
 import { Ingredient } from "../types/Ingredient/Ingredient";
 import { Menu } from "../types/Menu/Menu";
+import { Order } from "../types/Order/Order";
 import { Recipe } from "../types/Recipe/Recipe";
 import { Setting } from "../types/Setting/Setting";
 
@@ -167,6 +168,22 @@ export const getAllSettings = async () => {
 
 export const postSetting = async (setting: Setting) => {
     const response = await fetch(`${domain}/PostSetting`, getPOSTOptions(setting));
+
+    return response;
+}
+
+
+// Order
+export const getOrderById = async (orderId: string) => {
+    const response = await fetch(`${domain}/GetOrder/${orderId}`, getGETOptions())
+        .then(response => response.json() as Promise<Order>);
+
+    return response;
+}
+
+export const getAllOrders = async () => {
+    const response = await fetch(`${domain}/GetOrders`, getGETOptions())
+    .then(response => response.json() as Promise<Order[]>);
 
     return response;
 }

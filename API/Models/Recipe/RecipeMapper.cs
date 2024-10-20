@@ -1,4 +1,3 @@
-using System;
 using Project.Function;
 
 namespace AzureFunctions.Mappers

@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0" />
     <PackageReference Include="Telegram.Bot" Version="18.0.0" />
-    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.64.0.3171" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.65.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.65.0" />
     <PackageReference Include="Google.Apis.Core" Version="1.65.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />

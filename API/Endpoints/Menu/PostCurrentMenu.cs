@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +22,8 @@ namespace Project.Function
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<UpdateMenuRequestModel>(requestBody);
             RepositoryWrapper.GetRepo().PostCurrentMenu(data);
+
+            MenuHelper.UpdateMenuSpreadSheet();
 
             return new OkObjectResult(data);
         }
