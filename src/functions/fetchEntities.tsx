@@ -1,9 +1,11 @@
-import { Case } from "../types/Case/Case";
-import { Defendant } from "../types/Defendant/Defendant";
-import { DocumentObject } from "../types/Documents/DocumentObject";
+import { Allergy } from "../types/Allergy/Allergy";
+import { Ingredient } from "../types/Ingredient/Ingredient";
+import { Menu } from "../types/Menu/Menu";
+import { Recipe } from "../types/Recipe/Recipe";
+import { Setting } from "../types/Setting/Setting";
 
 
-const domain = "https://court-app-template.azurewebsites.net/api"; 
+const domain = "https://zenkitchen.azurewebsites.net/api"; 
 // const domain = "http://localhost:7071/api";
 
 const getHeaders = () => {
@@ -27,102 +29,144 @@ const getPOSTOptions = (object: any) => {
     }
 }
 
-export const getTestFunction = async () => {
-    const response = await fetch(`${domain}/TestFunction`, getGETOptions())
+// Allergies
+export const getAllAllergies = async () => {
+    const response = await fetch(`${domain}/GetAllAllergies`, getGETOptions())
+        .then(response => response.json() as Promise<Allergy[]>);
+
+    return response;
+}
+
+export const getAllergyById = async (id: string) => {
+
+    const response = await fetch(`${domain}/GetAllergy/${id}`, getGETOptions())
+        .then(response => response.json() as Promise<Allergy>);
+
+    return response;
+}
+
+export const postAllergy = async (entity: Allergy) => {
+    const response = await fetch(`${domain}/PostAllergy`, getPOSTOptions(entity));
+
+    return response;
+}
+
+export const deleteAllergyById = async (id: string) => {
+    await fetch(`${domain}/DeleteAllergy/${id}`, getGETOptions());;
+}
+
+
+// Ingredients
+export const getAllIngredients = async () => {
+    const response = await fetch(`${domain}/GetAllIngredients`, getGETOptions())
+        .then(response => response.json() as Promise<Ingredient[]>);
+
+    return response;
+}
+
+export const getIngredientById = async (id: string) => {
+
+    const response = await fetch(`${domain}/GetIngredient/${id}`, getGETOptions())
+        .then(response => response.json() as Promise<Ingredient>);
+
+    return response;
+}
+
+export const postIngredient = async (entity: Ingredient) => {
+    const response = await fetch(`${domain}/PostIngredient`, getPOSTOptions(entity));
+
+    return response;
+}
+
+export const deleteIngredientById = async (id: string) => {
+    await fetch(`${domain}/DeleteIngredient/${id}`, getGETOptions());;
+}
+
+
+// Recipes
+export const getAllRecipes = async () => {
+    const response = await fetch(`${domain}/GetAllRecipes`, getGETOptions())
+        .then(response => response.json() as Promise<Recipe[]>);
+
+    return response;
+}
+
+export const getRecipeById = async (id: string) => {
+
+    const response = await fetch(`${domain}/GetRecipe/${id}`, getGETOptions())
+        .then(response => response.json() as Promise<Recipe>);
+
+    return response;
+}
+
+export const postRecipe = async (entity: Recipe) => {
+    const response = await fetch(`${domain}/PostRecipe`, getPOSTOptions(entity));
+
+    return response;
+}
+
+export const deleteRecipeById = async (id: string) => {
+    await fetch(`${domain}/DeleteRecipe/${id}`, getGETOptions());;
+}
+
+
+// Menus
+export const getAllMenus = async () => {
+    const response = await fetch(`${domain}/GetAllMenus`, getGETOptions())
+        .then(response => response.json() as Promise<Menu[]>);
+
+    return response;
+}
+
+export const getMenuById = async (id: string) => {
+
+    const response = await fetch(`${domain}/GetMenu/${id}`, getGETOptions())
+        .then(response => response.json() as Promise<Menu>);
+
+    return response;
+}
+
+export const postMenu = async (entity: Menu) => {
+    const response = await fetch(`${domain}/PostMenu`, getPOSTOptions(entity));
+
+    return response;
+}
+
+export const deleteMenuById = async (id: string) => {
+    await fetch(`${domain}/DeleteMenu/${id}`, getGETOptions());;
+}
+
+export const postCurrentMenu = async (entity: Menu) => {
+    const response = await fetch(`${domain}/PostCurrentMenu`, getPOSTOptions(entity));
+
+    return response;
+}
+
+export const getCurrentMenuId = async () => {
+
+    const response = await fetch(`${domain}/GetCurrentMenuId`, getGETOptions())
         .then(response => response.json() as Promise<string>);
 
     return response;
 }
 
-export const getAllDefendants = async () => {
-    const response = await fetch(`${domain}/GetAllDefendants`, getGETOptions())
-        .then(response => response.json() as Promise<Defendant[]>);
+// Settings
+export const getSettingById = async (settingId: string) => {
+    const response = await fetch(`${domain}/GetSetting/${settingId}`, getGETOptions())
+        .then(response => response.json() as Promise<Setting>);
 
     return response;
 }
 
-export const searchAllDefendants = async (searchTerm: string) => {
-    const response = await fetch(`${domain}/GetAllDefendants?searchTerm=${searchTerm}`, getGETOptions())
-        .then(response => response.json() as Promise<Defendant[]>);
+export const getAllSettings = async () => {
+    const response = await fetch(`${domain}/GetSettings`, getGETOptions())
+    .then(response => response.json() as Promise<Setting[]>);
 
     return response;
 }
 
-export const getDefendantById = async (id: string) => {
-
-    const response = await fetch(`${domain}/GetDefendant/${id}`, getGETOptions())
-        .then(response => response.json() as Promise<Defendant>);
+export const postSetting = async (setting: Setting) => {
+    const response = await fetch(`${domain}/PostSetting`, getPOSTOptions(setting));
 
     return response;
-}
-
-export const postDefendant = async (defendant: Defendant) => {
-    const response = await fetch(`${domain}/PostDefendant`, getPOSTOptions(defendant));
-
-    return response;
-}
-
-export const deleteDefendantById = async (id: string) => {
-    await fetch(`${domain}/DeleteDefendant/${id}`, getGETOptions());;
-}
-
-
-export const getAllCases = async () => {
-    const response = await fetch(`${domain}/GetAllCases`, getGETOptions())
-        .then(response => response.json() as Promise<Case[]>);
-
-    return response;
-}
-
-export const searchAllCases = async (searchTerm: string) => {
-    const response = await fetch(`${domain}/GetAllCases?searchTerm=${searchTerm}`, getGETOptions())
-        .then(response => response.json() as Promise<Case[]>);
-
-    return response;
-}
-
-export const searchAllDocuments = async (searchTerm: string) => {
-    const response = await fetch(`${domain}/GetAllDocuments?searchTerm=${searchTerm}`, getGETOptions())
-        .then(response => response.json() as Promise<DocumentObject[]>);
-
-    console.log(response);
-
-    return response;
-}
-
-export const searchAllCaseDocuments = async (caseId: string, searchTerm: string) => {
-    const response = await fetch(`${domain}/GetCaseDocuments/${caseId}?searchTerm=${searchTerm}`, getGETOptions())
-        .then(response => response.json() as Promise<DocumentObject[]>);
-
-    return response;
-}
-
-export const postDocument = async (documentObject: DocumentObject) => {
-    const response = await fetch(`${domain}/PostDocument`, getPOSTOptions(documentObject));
-
-    return response;
-}
-
-export const deleteDocument = async (documentId: string) => {
-    const response = await fetch(`${domain}/DeleteDocument`, getPOSTOptions(documentId));
-
-    return response;
-}
-
-export const getCaseById = async (id: string) => {
-
-    const response = await fetch(`${domain}/GetCase/${id}`, getGETOptions())
-        .then(response => response.json() as Promise<Case>);
-
-    return response;
-}
-
-export const postCase = async (_case: Case) => {
-    const response = await fetch(`${domain}/PostCase`, getPOSTOptions(_case));
-
-    return response;
-}
-
-export const deleteCaseById = async (id: string) => {
-    await fetch(`${domain}/DeleteCase/${id}`, getGETOptions());;
 }

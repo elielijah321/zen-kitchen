@@ -122,12 +122,12 @@ const LoginPage = () => {
                   </div>
                   )}
                   <div className="field button-field">
-                    <button type="submit">{isSignUp ? 'Sign Up' : 'Sign In'}</button>
+                    <button type="submit" className='login-button'>{isSignUp ? 'Sign Up' : 'Sign In'}</button>
                   </div>
               </form>
-              <div className="form-link">
+              {/* <div className="form-link">
                   <span>{isSignUp ? 'Already have an account?' : 'Need an account?'} <a onClick={() => setIsSignUp(!isSignUp)} className="link signup-link">{isSignUp ? ' Sign In' : ' Sign Up'}</a></span>
-              </div>
+              </div> */}
             </div>
             {/* <div className="line"></div>
             <div className="media-options">

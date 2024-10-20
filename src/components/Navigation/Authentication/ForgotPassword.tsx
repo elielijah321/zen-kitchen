@@ -108,7 +108,7 @@ return (
                     )
                   }
                   <div className="field button-field">
-                    <button type="submit">Reset Password</button>
+                    <button type="submit" className='login-button'>Reset Password</button>
                   </div>
               </form>
             </div>

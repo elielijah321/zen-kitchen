@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using AzureFunctions.Mappers;
@@ -16,83 +15,245 @@ namespace AzureFunctions.Database
             _ctx = ctx;
         }
 
-        public void AddDefendant(Defendant newDefendant)
-        {
-           _ctx.Defendants.Add(newDefendant);
-           SaveAll();
-        }
-
-        public void UpdateDefendant(Defendant newDefendant)
-        {
-           var defendantToUpdate = _ctx.Defendants.FirstOrDefault(c => c.Id == newDefendant.Id);
-           defendantToUpdate.Name = newDefendant.Name;
-           defendantToUpdate.Email = newDefendant.Email;
-           defendantToUpdate.Address_Line1 = newDefendant.Address_Line1;
-           defendantToUpdate.Address_City = newDefendant.Address_City;
-           defendantToUpdate.Address_PostalCode = newDefendant.Address_PostalCode;
-
-           SaveAll();
-        }
-
-        public IEnumerable<Defendant> GetAllDefendants()
-        {
-           return _ctx.Defendants;
-        }
-
-        public Defendant GetDefendantById(string id)
-        {
-           return GetAllDefendants().FirstOrDefault(x => x.Id.ToString() == id);
-        }
-
-        public Defendant GetDefendantByEmail(string email)
-        {
-           return GetAllDefendants().FirstOrDefault(x => x.Email == email);
-        }
-
-         public string AddCase(UpdateCaseRequestModel caseRequest)
+        // Allergies
+         public string AddAllergy(UpdateAllergyRequestModel request)
          {
-            var newCase = caseRequest.ToCase();
+            var mappedEntity = request.ToModel();
 
-            _ctx.Cases.Add(newCase);
+            _ctx.Allergies.Add(mappedEntity);
             SaveAll();
 
-            var caseId = newCase.Id.ToString();
-
-            return caseId;
+            return mappedEntity.Id.ToString();
          }
 
-        public string UpdateCase(UpdateCaseRequestModel caseRequest)
+        public string UpdateAllergy(UpdateAllergyRequestModel request)
         {
-            var newCase = caseRequest.ToCase();
+            var mappedEntity = request.ToModel();
 
-            var caseToUpdate = _ctx.Cases.FirstOrDefault(c => c.Id == newCase.Id);
-            caseToUpdate.Title = newCase.Title;
+            var entityToUpdate = _ctx.Allergies.FirstOrDefault(c => c.Id == mappedEntity.Id);
+
+            entityToUpdate.Name = mappedEntity.Name;
 
             SaveAll();
 
-            return newCase.Id.ToString();
+            return mappedEntity.Id.ToString();
         }
 
-        public IEnumerable<Case> GetAllCases()
+        public IEnumerable<Allergy> GetAllAllergies()
         {
-           return _ctx.Cases;
+           return _ctx.Allergies;
         }
 
-        public Case GetCaseById(string id)
+        public Allergy GetAllergyById(string id)
         {
-           return GetAllCases().FirstOrDefault(x => x.Id.ToString() == id);
+           return GetAllAllergies().FirstOrDefault(x => x.Id.ToString() == id);
         }
 
-        public Case GetCaseByTitle(string title)
+        public void DeleteAllergyById(string id)
         {
-           return GetAllCases().FirstOrDefault(x => x.Title == title);
+            var allergy = _ctx.Allergies.FirstOrDefault(a => a.Id.ToString() == id);
+            
+           _ctx.Allergies.Remove(allergy);
+           SaveAll();
         }
 
-        public IEnumerable<Case> GetCaseByTerm(string searchTerm)
+        // Ingredients
+         public string AddIngredient(UpdateIngredientRequestModel request)
+         {
+            var mappedEntity = request.ToModel();
+
+            _ctx.Ingredients.Add(mappedEntity);
+            SaveAll();
+
+            return mappedEntity.Id.ToString();
+         }
+
+        public string UpdateIngredient(UpdateIngredientRequestModel request)
         {
-           return GetAllCases().Where(c => 
-                            c.Title.ToLower().Contains(searchTerm)
-                        );
+            var mappedEntity = request.ToModel();
+
+            var entityToUpdate = _ctx.Ingredients.FirstOrDefault(c => c.Id == mappedEntity.Id);
+
+            entityToUpdate.Name = mappedEntity.Name;
+            entityToUpdate.Calories = mappedEntity.Calories;
+            entityToUpdate.Protein = mappedEntity.Protein;
+
+            SaveAll();
+
+            return mappedEntity.Id.ToString();
+        }
+
+        public IEnumerable<Ingredient> GetAllIngredients()
+        {
+           return _ctx.Ingredients
+                  .OrderByDescending(r => r.Name);;
+        }
+
+        public Ingredient GetIngredientById(string id)
+        {
+           return GetAllIngredients().FirstOrDefault(x => x.Id.ToString() == id);
+        }
+
+        public void DeleteIngredientById(string id)
+        {
+            var ingredient = _ctx.Ingredients.FirstOrDefault(a => a.Id.ToString() == id);
+
+            var recipeItems = _ctx.RecipeItems.Where(r => r.IngredientId == ingredient.Id);
+            
+           _ctx.Ingredients.Remove(ingredient);
+           _ctx.RecipeItems.RemoveRange(recipeItems);
+
+           SaveAll();
+        }
+
+
+        // Recipes
+         public string AddRecipe(UpdateRecipeRequestModel request)
+         {
+            var mappedEntity = request.ToModel();
+
+            _ctx.Recipes.Add(mappedEntity);
+            SaveAll();
+
+            return mappedEntity.Id.ToString();
+         }
+
+        public string UpdateRecipe(UpdateRecipeRequestModel request)
+        {
+            var mappedEntity = request.ToModel();
+
+            var entityToUpdate = _ctx.Recipes.FirstOrDefault(c => c.Id == mappedEntity.Id);
+
+            var previousIngredients = _ctx.RecipeItems.Where(r => r.RecipeId == mappedEntity.Id);
+            _ctx.RecipeItems.RemoveRange(previousIngredients);
+
+            entityToUpdate.Name = mappedEntity.Name;
+            entityToUpdate.Price = mappedEntity.Price;
+            entityToUpdate.Ingredients = request.Ingredients;
+
+            SaveAll();
+
+            return mappedEntity.Id.ToString();
+        }
+
+        public IEnumerable<Recipe> GetAllRecipes()
+        {
+           return _ctx.Recipes
+                     .Include(r => r.Ingredients)
+                        .ThenInclude(i => i.Ingredient)
+                  .OrderBy(r => r.CreatedAt);
+        }
+
+        public Recipe GetRecipeById(string id)
+        {
+           var t = GetAllRecipes().FirstOrDefault(x => x.Id.ToString() == id);
+
+           return t;
+        }
+
+        public void DeleteRecipeById(string id)
+        {
+            var recipe = _ctx.Recipes.FirstOrDefault(a => a.Id.ToString() == id);
+            var recipeItems = _ctx.RecipeItems.Where(r => r.RecipeId == recipe.Id);
+            
+           _ctx.RecipeItems.RemoveRange(recipeItems);
+           _ctx.Recipes.Remove(recipe);
+
+           SaveAll();
+        }
+
+         // Menu
+         public string AddMenu(UpdateMenuRequestModel request)
+         {
+            var mappedEntity = request.ToModel();
+
+            _ctx.Menus.Add(mappedEntity);
+            SaveAll();
+
+            return mappedEntity.Id.ToString();
+         }
+
+        public string UpdateMenu(UpdateMenuRequestModel request)
+        {
+            var mappedEntity = request.ToModel();
+
+            var entityToUpdate = _ctx.Menus.FirstOrDefault(c => c.Id == mappedEntity.Id);
+
+            var previousRecipes = _ctx.MenuItems.Where(r => r.MenuId == mappedEntity.Id);
+            _ctx.MenuItems.RemoveRange(previousRecipes);
+
+            entityToUpdate.Name = mappedEntity.Name;
+            entityToUpdate.Recipes = request.Recipes;
+
+            SaveAll();
+
+            return mappedEntity.Id.ToString();
+        }
+
+        public IEnumerable<Menu> GetAllMenus()
+        {
+           return _ctx.Menus
+                     .Include(m => m.Recipes)
+                        .ThenInclude(m => m.Recipe)
+                     .OrderBy(m => m.CreatedAt);
+        }
+
+        public Menu GetMenuById(string id)
+        {
+           return GetAllMenus().FirstOrDefault(x => x.Id.ToString() == id);
+        }
+
+        public void DeleteMenuById(string id)
+        {
+            var menu = _ctx.Menus.FirstOrDefault(a => a.Id.ToString() == id);
+            var menuItems = _ctx.MenuItems.Where(r => r.MenuId == menu.Id);
+            
+           _ctx.MenuItems.RemoveRange(menuItems);
+           _ctx.Menus.Remove(menu);
+
+           SaveAll();
+        }
+
+        public void PostCurrentMenu(UpdateMenuRequestModel menu)
+        {
+            var setting = GetSetting(SettingConstants.CURRENT_MENU_ID);
+            setting.Value = menu.Id.ToString();
+            UpdateSetting(setting);   
+        }
+
+        public string GetCurrentMenuId()
+        {
+            var setting = GetSetting(SettingConstants.CURRENT_MENU_ID);
+
+            return setting.Value;
+        }
+
+        //Settings 
+        public List<Setting> GetAllSettings()
+        {
+            return _ctx.Settings
+                        .ToList();
+        }
+
+        public Setting GetSetting(string id)
+        {
+            return GetAllSettings().FirstOrDefault(s => s.Id.ToString() == id);
+        }
+
+        public void AddNewSetting(Setting setting)
+        {
+            _ctx.Settings.Add(setting);
+            SaveAll();
+        }
+
+        public void UpdateSetting(Setting settingToUpdate)
+        {
+            var originalSetting = _ctx.Settings.FirstOrDefault(s => s.Id == settingToUpdate.Id);
+
+            originalSetting.Name = settingToUpdate.Name;
+            originalSetting.Value = settingToUpdate.Value;
+           
+            SaveAll();
         }
 
         // Save

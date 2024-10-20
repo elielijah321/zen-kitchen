@@ -21,7 +21,7 @@ namespace Project.Function
             optionsBuilder.EnableSensitiveDataLogging();
 
             // var connectionString = Environment.GetEnvironmentVariable("MARINEL_DEV_CONNECTION_STRING");
-            var connectionString = "Server=tcp:court-app-template.database.windows.net,1433;Initial Catalog=court-app;Persist Security Info=False;User ID=elijah;Password=Kabiyesi2024;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            var connectionString = "Server=tcp:zen-kitchen-mssqlserver-prod.database.windows.net,1433;Initial Catalog=zen;Persist Security Info=False;User ID=zen-manchester;Password=AbbieKitchen!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             optionsBuilder.UseSqlServer(connectionString);
         }
 
@@ -32,7 +32,15 @@ namespace Project.Function
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Defendant> Defendants { get; set; }
-        public DbSet<Case> Cases { get; set; }
+        public DbSet<Allergy> Allergies { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeItem> RecipeItems { get; set; }
+
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<MenuItem> MenuItems { get; set; }
+
+        public DbSet<Setting> Settings { get; set; }
+
     }
 }

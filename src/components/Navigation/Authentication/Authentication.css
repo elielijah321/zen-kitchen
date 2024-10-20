@@ -67,6 +67,12 @@ form{
     font-weight: 400;
     border-radius: 6px;
 }
+
+.login-button{
+    background-color: #C8B5A6 !important;
+    border: 2px solid #000 !important;
+}
+
 .field input{
     outline: none;
     padding: 0 15px;

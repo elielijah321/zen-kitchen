@@ -8,13 +8,14 @@ import Money from "./icons/money.png";
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Home from '../Home';
 
-import DefendantsPage from '../Defendant/DefendantsPage';
-import EditDefendant from '../Defendant/EditDefendant';
 import ForgotPasswordPage from './Authentication/ForgotPassword';
 import LoginPage from './Authentication/LoginPage';
-import CasesPage from '../Cases/CasesPage';
-import EditCase from '../Cases/EditCase';
-import DocumentSearch from '../Documents/DocumentSearch';
+// import AllergiesPage from '../Allergy/AllergiesPage';
+import EditAllergy from '../Food/Allergy/EditAllergy';
+import FoodPage from '../Food/FoodPage';
+import EditIngredient from '../Food/Ingredient/EditIngredient';
+import EditRecipe from '../Food/Recipes/EditRecipe';
+import EditMenu from '../Food/Menu/EditMenu';
 
 const SideMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,8 +29,8 @@ const SideMenu: React.FC = () => {
   const menuItems = 
   [
       { name: 'Home', icon: NestBox, path: '/home' },
-      { name: 'Defendants', icon: Profile, path: '/Defendants' },
-      { name: 'Cases', icon: Money, path: '/Cases' },
+      { name: 'Food', icon: Profile, path: '/Food' },
+      // { name: 'Cases', icon: Money, path: '/Cases' },
       // { name: 'Documents', icon: Money, path: '/Documents' }
   ];
 
@@ -67,13 +68,11 @@ const SideMenu: React.FC = () => {
           <Routes>
               <Route path="/" element={navigateToPageIfAuthenticated(<Home />)} />
               <Route path="/home" element={navigateToPageIfAuthenticated(<Home />)} />
-              <Route path="/Defendants" element={navigateToPageIfAuthenticated(<DefendantsPage />)} />
-              <Route path="/Defendant/:id" element={navigateToPageIfAuthenticated(<EditDefendant />)} />
-
-              <Route path="/Cases" element={navigateToPageIfAuthenticated(<CasesPage />)} />
-              <Route path="/Case/:id" element={navigateToPageIfAuthenticated(<EditCase />)} />
-
-              <Route path="/Documents" element={navigateToPageIfAuthenticated(<DocumentSearch />)} />
+              <Route path="/Food" element={navigateToPageIfAuthenticated(<FoodPage />)} />
+              <Route path="/Allergy/:id" element={navigateToPageIfAuthenticated(<EditAllergy />)} />
+              <Route path="/Ingredient/:id" element={navigateToPageIfAuthenticated(<EditIngredient />)} />
+              <Route path="/Recipe/:id" element={navigateToPageIfAuthenticated(<EditRecipe />)} />
+              <Route path="/Menu/:id" element={navigateToPageIfAuthenticated(<EditMenu />)} />
 
               <Route path="/login" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
