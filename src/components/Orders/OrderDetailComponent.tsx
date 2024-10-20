@@ -1,5 +1,5 @@
 import React from 'react'
-import { Accordion, Form, Table } from 'react-bootstrap';
+import { Accordion, Table } from 'react-bootstrap';
 import { Order } from '../../types/Order/Order';
 import { getDisplayDate } from '../../helpers/DateHelper';
 

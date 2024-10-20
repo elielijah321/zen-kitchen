@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp] = useState(false);
   const navigate = useNavigate();
 
   const handleSignIn = async (e: { preventDefault: () => void; }) => {
