@@ -1,7 +1,8 @@
+import { Recipe } from "../Recipe/Recipe";
 
 export interface Order {
     createdAt: Date;
-    orderDetails: string[];
+    orderDetails: Recipe[];
     name: string;
     phoneNumber: string
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Accordion, Table } from 'react-bootstrap';
-import { Order } from '../../types/Order/Order';
-import { getDisplayDate } from '../../helpers/DateHelper';
+import { Order } from '../../../types/Order/Order';
+import { getDisplayDate } from '../../../helpers/DateHelper';
 
 
 const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
@@ -40,7 +40,7 @@ const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
                       order.orderDetails.map(od => {
                         return (
                         <tr>
-                          <td>{od}</td>
+                          <td>{od.name}</td>
                         </tr>
                         )
                       })

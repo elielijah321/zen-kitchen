@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Accordion, Table } from 'react-bootstrap';
-import { Order } from '../../types/Order/Order';
-import Loading from '../HelperComponents/Loading';
-import { getAllOrders } from '../../functions/fetchEntities';
+import { Order } from '../../../types/Order/Order';
+import Loading from '../../HelperComponents/Loading';
+import { getAllOrders } from '../../../functions/fetchEntities';
 import OrderDetailComponent from './OrderDetailComponent';
-// import { getAllMenus, getCurrentMenuId, postCurrentMenu } from '../../../functions/fetchEntities';
-// import { canEdit } from '../../../helpers/UserHelper';
-// import Loading from '../../HelperComponents/Loading';
-// import { Menu } from '../../../types/Menu/Menu';
 
 function OrderComponent() {
 
@@ -23,14 +19,6 @@ function OrderComponent() {
        .then(orders => setOrders(orders));
 
   }, [])
-
-
-  // const handleCurrentMenuChange = (menu: Menu) => {
-
-  //   // postCurrentMenu(menu);
-  //   setCurrentMenuId(menu.id);
-
-  // }
 
   return (
     <>
@@ -49,34 +37,11 @@ function OrderComponent() {
                             <Table striped hover responsive>
                               <tbody>
                                 <Accordion alwaysOpen={true}>
-
                                     {orders.map((_order: Order) => {
-
-
                                       return(
                                         <OrderDetailComponent order={_order} />
                                       )
-
-                                    //   return (
-                                    //     <tr key={_order.name}>
-                                    //         <td>{getDisplayDate(_order.createdAt)}</td>
-                                    //         <td>{_order.name}</td>
-                                    //         <td>{_order.orderDetails.length}</td>
-                                    //         <td>{_order.phoneNumber}</td>
-                                    //         <td>
-                                    //           {/* {
-                                    //             <Link to={`/Menu/${_menu.id}`} className="button">
-                                    //                 <Button id={`${_menu.id}-btn`}>
-                                    //                     Edit
-                                    //                 </Button>
-                                    //             </Link>
-                                    //           } */}
-                                                
-                                    //         </td>
-                                    //     </tr>
-                                    // )
                                     })}
-
                                 </Accordion>
                               </tbody>
                             </Table>

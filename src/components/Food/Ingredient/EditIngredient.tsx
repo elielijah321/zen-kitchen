@@ -9,8 +9,10 @@ function EditIngredient() {
 
     const [hasBeenEdited, setHasBeenEdited] = useState(false);
     const [validated, setValidated] = useState(false);
+    // const [unitOfMeasurements] = useState<string[]>(["g", "ml"]);
 
-    const [selectedIngredient, setSelectedIngredient] = useState<IngredientRequest>({} as IngredientRequest);
+
+    const [selectedIngredient, setSelectedIngredient] = useState<IngredientRequest>({ unitOfMeasurement: "g"} as IngredientRequest);
 
     const navigate = useNavigate();
 
@@ -38,6 +40,18 @@ function EditIngredient() {
         setSelectedIngredient({...selectedIngredient, calories: parseInt(calories)});
         setHasBeenEdited(true);
     }
+
+
+    const handleWeightChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const weight = event.target.value;
+        setSelectedIngredient({...selectedIngredient, weight: parseInt(weight)});
+        setHasBeenEdited(true);
+    }
+
+    const handleUoMChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        const uom = event.target.value;
+        setSelectedIngredient({ ...selectedIngredient, unitOfMeasurement: uom });
+      }
 
 
     const handleProteinChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -104,6 +118,26 @@ function EditIngredient() {
                                     required
                                     />
                                 </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                    <Form.Label>Weight</Form.Label>
+                                    <Form.Control 
+                                    id="edit-weight"
+                                    type="number" 
+                                    placeholder="Weight" 
+                                    onChange={handleWeightChange} 
+                                    value={selectedIngredient.weight} 
+                                    required
+                                    />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formGender">
+                                <Form.Label className='centered'>Unit Of Measurement</Form.Label>
+                                <select className="form-select" aria-label="UoM" onChange={handleUoMChange}>
+                                <option value={"g"} selected={selectedIngredient.unitOfMeasurement === "g"}>Grams</option>
+                                <option value={"ml"} selected={selectedIngredient.unitOfMeasurement === "ml"}>ML</option>
+                                </select>
+                            </Form.Group>
 
                             <Form.Group className="mb-3">
                                     <Form.Label>Calories</Form.Label>

@@ -20,15 +20,21 @@ namespace Project.Function
         {
             log.LogInformation("GetOrders function processed a request.");
 
+            var allRecipres = RepositoryWrapper.GetRepo().GetAllRecipes();
+
             var data = GoogleSheetService.GetData();
 
             var orderList = data.Select(d => {
+
+                var recipeNames = d[1].ToString().Split(",").Select(od => od.Trim());
+                var justDate = d[0].ToString().Split(" ")[0];
+
                 var _order = new Order();
                 _order.Id = Guid.NewGuid();
-                _order.CreatedAt = DateTime.ParseExact(d[0].ToString(), "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                _order.OrderDetails = d[1].ToString().Split(",").Select(od => od.Trim());
+                _order.CreatedAt = DateTime.ParseExact(justDate, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                _order.OrderDetails = allRecipres.Where(r => recipeNames.Contains(r.Name));
                 _order.Name = d[2].ToString();
-                _order.PhoneNumber = d[3].ToString();;
+                _order.PhoneNumber = d[3].ToString();
 
                 return _order;
             }).ToList();

@@ -77,6 +77,8 @@ namespace AzureFunctions.Database
             entityToUpdate.Name = mappedEntity.Name;
             entityToUpdate.Calories = mappedEntity.Calories;
             entityToUpdate.Protein = mappedEntity.Protein;
+            entityToUpdate.Weight = mappedEntity.Weight;
+            entityToUpdate.UnitOfMeasureMent = mappedEntity.UnitOfMeasureMent;
 
             SaveAll();
 

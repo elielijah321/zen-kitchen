@@ -5,5 +5,7 @@ namespace Project.Function
         public string Name { get; set; }
         public int Calories { get; set; }
         public int Protein { get; set; }
+        public float Weight { get; set; }
+        public string UnitOfMeasureMent { get; set; }
     }
 }

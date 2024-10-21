@@ -1,5 +1,6 @@
 import { Tab, Tabs } from "react-bootstrap";
-import OrderComponent from "./OrderComponent";
+import OrderComponent from "./Order/OrderComponent";
+import ShoppingComponent from "./Shopping/ShoppingComponent";
 
 function OrderPage() {
 
@@ -9,6 +10,9 @@ function OrderPage() {
         <Tabs defaultActiveKey={"Orders"} className="mb-3">
           <Tab eventKey="Orders" title="Orders">
             <OrderComponent />
+          </Tab>
+          <Tab eventKey="Shopping List" title="Shopping List">
+            <ShoppingComponent />
           </Tab>
 
 
