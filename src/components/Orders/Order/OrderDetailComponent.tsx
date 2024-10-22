@@ -1,10 +1,21 @@
 import React from 'react'
-import { Accordion, Table } from 'react-bootstrap';
+import { Accordion, Button, Table } from 'react-bootstrap';
 import { Order } from '../../../types/Order/Order';
 import { getDisplayDate } from '../../../helpers/DateHelper';
+import { deleteOrderById } from '../../../functions/fetchEntities';
 
 
 const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
+
+
+  const handleDelete = async () => {
+
+    if(window.confirm(`Are you sure you want to delete ${order.name}'s order?`))
+    {
+        await deleteOrderById(order.id);
+        window.location.reload();
+    };
+};
 
 
   return (
@@ -19,6 +30,7 @@ const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
                         <th>Date</th> 
                         <th>Name</th> 
                         <th>Phone Number</th> 
+                        <th></th> 
                     </tr>
                   </thead>
                   <tbody>
@@ -26,6 +38,11 @@ const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
                       <td>{getDisplayDate(order.createdAt)}</td>
                       <td>{order.name}</td>
                       <td>{order.phoneNumber}</td>
+                      <td>
+                            <Button id="save" className='order-confirm-btn' variant="danger" onClick={() => handleDelete()} >
+                                Delete Order
+                            </Button>
+                      </td>
                     </tr>
                   </tbody>
               </Table>
@@ -39,7 +56,7 @@ const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
                     {
                       order.orderDetails.map(od => {
                         return (
-                        <tr>
+                        <tr id={od.id}>
                           <td>{od.name}</td>
                         </tr>
                         )

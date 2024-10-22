@@ -4,19 +4,20 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Company.Function;
 
 namespace Project.Function
 {
-    public static class GetOrder
+    public static class DeleteOrder
     {
-        [FunctionName("GetOrder")]
+        [FunctionName("DeleteOrder")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "GetOrder/{orderId}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "DeleteOrder/{orderId}")] HttpRequest req,
             string orderId, ILogger log)
         {
-            log.LogInformation("GetOrder function processed a request.");
+            log.LogInformation("DeleteOrder function processed a request.");
 
-            // var setting = RepositoryWrapper.GetRepo().GetSetting(settingId);
+            GoogleSheetService.DeleteRowById(orderId);
 
             return new OkObjectResult("setting");
         }

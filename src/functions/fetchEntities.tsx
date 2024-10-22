@@ -187,3 +187,7 @@ export const getAllOrders = async () => {
 
     return response;
 }
+
+export const deleteOrderById = async (id: string) => {
+    await fetch(`${domain}/DeleteOrder/${id}`, getGETOptions());;
+}
