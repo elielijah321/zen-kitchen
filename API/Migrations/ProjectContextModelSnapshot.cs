@@ -32,7 +32,7 @@ namespace API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 21, 9, 34, 10, 791, DateTimeKind.Utc).AddTicks(9059));
+                        .HasDefaultValue(new DateTime(2024, 10, 22, 8, 35, 11, 68, DateTimeKind.Utc).AddTicks(4105));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -56,7 +56,7 @@ namespace API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 21, 9, 34, 10, 791, DateTimeKind.Utc).AddTicks(9583));
+                        .HasDefaultValue(new DateTime(2024, 10, 22, 8, 35, 11, 68, DateTimeKind.Utc).AddTicks(5054));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -64,7 +64,7 @@ namespace API.Migrations
                     b.Property<int>("Protein")
                         .HasColumnType("int");
 
-                    b.Property<string>("UnitOfMeasureMent")
+                    b.Property<string>("UnitOfMeasurement")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Weight")
@@ -86,7 +86,7 @@ namespace API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 21, 9, 34, 10, 792, DateTimeKind.Utc).AddTicks(94));
+                        .HasDefaultValue(new DateTime(2024, 10, 22, 8, 35, 11, 68, DateTimeKind.Utc).AddTicks(6065));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -107,7 +107,7 @@ namespace API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 21, 9, 34, 10, 792, DateTimeKind.Utc).AddTicks(727));
+                        .HasDefaultValue(new DateTime(2024, 10, 22, 8, 35, 11, 68, DateTimeKind.Utc).AddTicks(6783));
 
                     b.Property<Guid>("MenuId")
                         .HasColumnType("uniqueidentifier");
@@ -135,7 +135,7 @@ namespace API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 21, 9, 34, 10, 792, DateTimeKind.Utc).AddTicks(1269));
+                        .HasDefaultValue(new DateTime(2024, 10, 22, 8, 35, 11, 68, DateTimeKind.Utc).AddTicks(7665));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -159,7 +159,7 @@ namespace API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 21, 9, 34, 10, 792, DateTimeKind.Utc).AddTicks(1787));
+                        .HasDefaultValue(new DateTime(2024, 10, 22, 8, 35, 11, 68, DateTimeKind.Utc).AddTicks(8365));
 
                     b.Property<Guid>("IngredientId")
                         .HasColumnType("uniqueidentifier");
@@ -187,7 +187,7 @@ namespace API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 21, 9, 34, 10, 792, DateTimeKind.Utc).AddTicks(2276));
+                        .HasDefaultValue(new DateTime(2024, 10, 22, 8, 35, 11, 68, DateTimeKind.Utc).AddTicks(8867));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

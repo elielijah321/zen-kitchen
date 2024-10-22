@@ -12,7 +12,7 @@ namespace AzureFunctions.Mappers
                 Calories = request.Calories,
                 Protein = request.Protein,
                 Weight = request.Weight,
-                UnitOfMeasureMent = request.UnitOfMeasureMent,
+                UnitOfMeasurement = request.UnitOfMeasurement,
             };
 
         }
@@ -26,7 +26,7 @@ namespace AzureFunctions.Mappers
                 Calories = entity.Calories,
                 Protein = entity.Protein,
                 Weight = entity.Weight,
-                UnitOfMeasureMent = entity.UnitOfMeasureMent,
+                UnitOfMeasurement = entity.UnitOfMeasurement,
             };
         }
     }

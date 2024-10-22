@@ -6,6 +6,6 @@ namespace Project.Function
         public int Calories { get; set; }
         public int Protein { get; set; }
         public float Weight { get; set; }
-        public string UnitOfMeasureMent { get; set; }
+        public string UnitOfMeasurement { get; set; }
     }
 }

@@ -74,6 +74,21 @@ function ShoppingComponent() {
     return shoppingList;
   }
 
+  const calculateWeightMeasurement = (shoppingListItem: ShoppingListItem) => {
+
+    var totalAmountNeeded = shoppingListItem.totalAmountNeeded;
+    var uom = shoppingListItem.unitOfMeasurement;
+
+    if (totalAmountNeeded < 1000) {
+      return `${totalAmountNeeded}${uom}`;
+    }else{
+
+      var newTotal = (totalAmountNeeded / 1000).toFixed(1);
+
+      return `${newTotal}${uom === "g" ? "kg" : "l"}`;
+    }
+  }
+
   return (
     <>
       <div>
@@ -97,11 +112,12 @@ function ShoppingComponent() {
                               <tbody>
                                 {
                                   shoppingList.map(i => {
+
                                     return(
                                       <tr>
                                         <td>{i.ingredientName}</td>
                                         <td>{i.quantity}</td>
-                                        <td>{i.totalAmountNeeded} grams</td>
+                                        <td>{calculateWeightMeasurement(i)}</td>
                                       </tr>
                                     )
                                   })

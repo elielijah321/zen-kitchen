@@ -4,6 +4,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Company.Function;
+using System.Collections.Generic;
 
 namespace Project.Function
 {
@@ -16,7 +18,15 @@ namespace Project.Function
         {
             log.LogInformation("TestFunction function processed a request.");
 
-            MenuHelper.UpdateMenuSpreadSheet();
+            // MenuHelper.UpdateMenuSpreadSheet();
+
+
+            GoogleSheetService.PutWWWData();
+
+
+
+
+            
 
             return new OkObjectResult("");
         }

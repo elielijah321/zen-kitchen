@@ -51,6 +51,7 @@ function EditIngredient() {
     const handleUoMChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const uom = event.target.value;
         setSelectedIngredient({ ...selectedIngredient, unitOfMeasurement: uom });
+        setHasBeenEdited(true);
       }
 
 

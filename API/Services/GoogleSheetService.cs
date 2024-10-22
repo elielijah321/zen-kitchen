@@ -46,12 +46,12 @@ namespace Company.Function
         }
 
 
-        public static void PutData(IEnumerable<string> values) 
+        public static void PutData(string range, IEnumerable<string> values) 
         {
             var service = GetSheetsService();
             var spreadsheet = GetSpreadsheetValuesResource(service);
 
-            var range = "Menu!A:A";
+            // var range = "Menu!A:A";
 
             var valuesList = values.Select(v => {
 
@@ -78,6 +78,43 @@ namespace Company.Function
             // Execute the update request
             var response2 = updateRequest.Execute();
             Console.WriteLine($"{response2.UpdatedCells} cells updated.");
+        }
+
+        public static void PutWWWData() 
+        {
+            var service = GetSheetsService();
+            var spreadsheet = GetSpreadsheetValuesResource(service);
+
+            var range = "Menu!E2:E";
+
+            // Retrieve the data from the sheet to determine how many rows exist in column E
+            SpreadsheetsResource.ValuesResource.GetRequest getRequest = spreadsheet.Get(SpreadsheetId, range);
+            ValueRange getResponse = getRequest.Execute();
+            IList<IList<object>> existingRows = getResponse.Values;
+
+            int rowCount = existingRows != null ? existingRows.Count : 0;
+
+            List<IList<object>> guids = new List<IList<object>>();
+            for (int i = 0; i < rowCount; i++)
+            {
+                // Generate a GUID for each empty row in column E
+                string guid = Guid.NewGuid().ToString();
+                guids.Add(new List<object> { guid });
+            }
+
+            // Prepare the value range to write the GUIDs back into the sheet
+            ValueRange valueRange = new ValueRange
+            {
+                Range = range,
+                Values = guids
+            };
+
+            // Update the sheet with the new GUIDs
+            var updateRequest = spreadsheet.Update(valueRange, SpreadsheetId, range);
+            updateRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
+            UpdateValuesResponse updateResponse = updateRequest.Execute();
+
+            Console.WriteLine($"Inserted {updateResponse.UpdatedCells} GUIDs into column E.");
         }
 
     

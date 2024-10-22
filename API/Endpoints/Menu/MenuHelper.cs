@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Company.Function;
 
@@ -17,10 +18,16 @@ namespace Project.Function
                 return  r.Recipe.Name;
             });
 
-            GoogleSheetService.PutData(recipeNames);
+            PutNamesInSheets(recipeNames);
 
             await HTTPHelper.CallApiAsync(domain);
 
+        }
+
+
+        private static void PutNamesInSheets(IEnumerable<string> recipeNames)
+        {
+            GoogleSheetService.PutData("Menu!A:A", recipeNames);
         }
     }
 }
