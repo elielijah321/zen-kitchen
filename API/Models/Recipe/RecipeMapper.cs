@@ -8,7 +8,7 @@ namespace AzureFunctions.Mappers
             return new Recipe
             {
                 Id = request.Id,
-                Name = request.Name,
+                Name = request.Name.Replace(",", "¸"),
                 Ingredients = request.Ingredients,
                 Price = request.Price
             };
@@ -20,7 +20,7 @@ namespace AzureFunctions.Mappers
             return new UpdateRecipeResponseModel
             {
                 Id = entity.Id,
-                Name = entity.Name,
+                Name = entity.Name.Replace("¸", ","),
                 Ingredients = entity.Ingredients,
                 Price = entity.Price
             };

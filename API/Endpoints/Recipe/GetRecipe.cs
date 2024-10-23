@@ -4,7 +4,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-// using AzureFunctions.Models;
+using AzureFunctions.Mappers;
 
 namespace Project.Function
 {
@@ -17,7 +17,7 @@ namespace Project.Function
         {
             log.LogInformation("GetRecipe function processed a request.");
 
-            var data = RepositoryWrapper.GetRepo().GetRecipeById(id);
+            var data = RepositoryWrapper.GetRepo().GetRecipeById(id).ToResponse();
 
             return new OkObjectResult(data);
         }

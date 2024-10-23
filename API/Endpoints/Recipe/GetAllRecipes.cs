@@ -4,6 +4,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using AzureFunctions.Mappers;
 // using AzureFunctions.Models;
 
 namespace Project.Function
@@ -19,7 +21,7 @@ namespace Project.Function
 
             var repo = RepositoryWrapper.GetRepo();
 
-            var list = repo.GetAllRecipes();
+            var list = repo.GetAllRecipes().Select(r => r.ToResponse());
 
             return new OkObjectResult(list);
         }

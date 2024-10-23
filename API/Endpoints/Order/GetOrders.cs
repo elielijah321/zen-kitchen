@@ -9,6 +9,7 @@ using Company.Function;
 using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
+using AzureFunctions.Mappers;
 
 namespace Project.Function
 {
@@ -40,7 +41,7 @@ namespace Project.Function
                 var _order = new Order();
                 _order.Id = Guid.Parse(d[4].ToString());
                 _order.CreatedAt = DateTime.ParseExact(justDate, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-                _order.OrderDetails = allRecipres.Where(r => recipeNames.Contains(r.Name));
+                _order.OrderDetails = allRecipres.Where(r => recipeNames.Contains(r.Name)).Select(r => r.ToResponse());
                 _order.Name = d[2].ToString();
                 _order.PhoneNumber = d[3].ToString();
 
