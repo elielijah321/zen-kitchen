@@ -79,7 +79,7 @@ function EditIngredient() {
             if (hasBeenEdited) {
                 await postIngredient(selectedIngredient);
             }
-            navigate('/Food', {replace: true});
+            navigate('/Food?tab=Ingredients', {replace: true});
         }
         setValidated(true);
     };

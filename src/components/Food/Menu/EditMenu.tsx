@@ -129,7 +129,7 @@ function EditMenu() {
             if (hasBeenEdited) {
                 await postMenu(selectedMenu);
             }
-            navigate('/Food', {replace: true});
+            navigate('/Food?tab=Menus', {replace: true});
         }
         setValidated(true);
     };
@@ -145,14 +145,14 @@ function EditMenu() {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form.Group className="mb-3">
+                {/* <Form.Group className="mb-3">
                                 <Form.Control 
                                 type="text" 
                                 placeholder="Search..." 
                                 onChange={handleSearchChange} 
                                 value={searchTerm} 
                                 />
-                </Form.Group>
+                </Form.Group> */}
                 {
                     <Table>
                         {

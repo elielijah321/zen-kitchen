@@ -16,7 +16,6 @@ function EditRecipe() {
     const [selectedRecipe, setSelectedRecipe] = useState<RecipeRequest>({} as RecipeRequest);
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
-
     const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
 
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -27,7 +26,6 @@ function EditRecipe() {
 
         setShowModal(true);
     };
-
 
     const navigate = useNavigate();
 
@@ -61,16 +59,11 @@ function EditRecipe() {
 
     }, [parsedId]);
 
-
-
-
-
     const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
         const name = event.target.value;
         setSelectedRecipe({...selectedRecipe, name: name});
         setHasBeenEdited(true);
     }
-
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
 
@@ -131,11 +124,10 @@ function EditRecipe() {
             if (hasBeenEdited) {
                 await postRecipe(selectedRecipe);
             }
-            navigate('/Food', {replace: true});
+            navigate('/Food?tab=Recipes', {replace: true});
         }
         setValidated(true);
     };
-
 
     return (
         <>
@@ -147,14 +139,14 @@ function EditRecipe() {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form.Group className="mb-3">
+                {/* <Form.Group className="mb-3">
                                 <Form.Control 
                                 type="text" 
                                 placeholder="Search..." 
                                 onChange={handleSearchChange} 
                                 value={searchTerm} 
                                 />
-                </Form.Group>
+                </Form.Group> */}
                 {
                     <Table>
                         {

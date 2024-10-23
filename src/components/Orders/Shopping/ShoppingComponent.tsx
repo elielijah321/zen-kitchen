@@ -11,10 +11,7 @@ function ShoppingComponent() {
   // const systemUser = state.systemUser;
 
   const [orders, setOrders] = useState<Order[]>();
-  // const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [shoppingList, setShoppingList] = useState<ShoppingListItem[]>([]); 
-
-  
 
   useEffect(() => {
     // fetch data
