@@ -222,19 +222,36 @@
 
   .page-delete-btn{
     border: 1.5px solid #000 !important;
-
+    margin-left: 10px !important;
   }
 
 
   .edit-action-btns{
-    /* fle */
-    /* flex: auto;
-    justify-content: space-between !important; */
-
-    /* float: right !important; */
+    float: right !important;
   }
-
 
   .form-component{
     margin-top: 50px !important;
+  }
+
+  .form-label {
+    float: left !important;
+  }
+
+  .form-first-label{
+    margin-top: 60px;
+  }
+
+  .flex-container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-form{
+    margin-bottom: 50px !important;
+  }
+
+
+  .margin-top-20{
+    margin-top: 20px !important;
   }

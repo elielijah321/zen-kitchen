@@ -185,23 +185,23 @@ function EditRecipe() {
                     <h1>Edit Recipe</h1>
                     <Form noValidate validated={validated} onSubmit={event => handleSubmit(event)}>
 
-                        <div className='edit-action-btns'>
-                            <Button id="save" className='page-btn' variant="primary" type="submit">
-                                Save
-                            </Button>
-                                
-                            {parsedId !== "new" && 
-                            (
-                                <Button id="save" className='page-delete-btn' variant="danger" onClick={handleDelete} >
-                                    Delete
-                                </Button>
-                            )}
-                        </div>
+                        <div className='flex-container'>
+                                <div>
+                                    <div className='edit-action-btns'>
+                                        <Button id="save" className='page-btn' variant="primary" type="submit">
+                                            Save
+                                        </Button>
+                                            
+                                        {parsedId !== "new" && 
+                                        (
+                                            <Button id="save" className='page-delete-btn' variant="danger" onClick={handleDelete} >
+                                                Delete
+                                            </Button>
+                                        )}
+                                    </div>
+                                </div>
 
-                        <div className='page'>
-
-                        <Table className='recipe-information-info' hover responsive>
-                           
+                                <Table className='recipe-information-info margin-top-20' hover responsive>
                                     <tbody>
                                         <tr>
                                             <td>Total Calories</td>
@@ -213,6 +213,11 @@ function EditRecipe() {
                                         </tr>
                                     </tbody>
                                 </Table>
+                        </div>
+
+
+                        
+                        <div className='page-form'>
 
                             <Form.Group className="mb-3">
                                     <Form.Label>Name</Form.Label>
@@ -225,14 +230,17 @@ function EditRecipe() {
                                     required
                                     />
                                 </Form.Group>
+                        </div>
 
-                                <div className='edit-ingredient-btn'>
-                                    <Button className='page-btn'  variant="primary" onClick={handleShow}>
+                        <div className='flex-container'>
+
+                            <div className='edit-ingredient-btn'>
+                                    <Button className='page-btn  edit-action-btns'  variant="primary" onClick={handleShow}>
                                         Add Ingredients
                                     </Button>
                                 </div>
 
-                                <Table striped hover responsive>
+                                <Table className='margin-top-20' striped hover responsive>
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -253,6 +261,9 @@ function EditRecipe() {
                                         })}
                                     </tbody>
                                 </Table>
+
+
+
                         </div>
                     </Form>
                 </div> 

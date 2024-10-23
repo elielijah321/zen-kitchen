@@ -9,8 +9,6 @@ function EditIngredient() {
 
     const [hasBeenEdited, setHasBeenEdited] = useState(false);
     const [validated, setValidated] = useState(false);
-    // const [unitOfMeasurements] = useState<string[]>(["g", "ml"]);
-
 
     const [selectedIngredient, setSelectedIngredient] = useState<IngredientRequest>({ unitOfMeasurement: "g"} as IngredientRequest);
 
@@ -109,7 +107,7 @@ function EditIngredient() {
 
                         <div className='form-component'>
                             <Form.Group className="mb-3">
-                                    <Form.Label>Name</Form.Label>
+                                    <Form.Label className='form-first-label'>Name</Form.Label>
                                     <Form.Control 
                                     id="edit-name"
                                     type="text" 

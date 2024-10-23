@@ -194,11 +194,9 @@ function EditMenu() {
                             )}
                         </div>
 
-                        <div className='page'>
-
-
+                        <div className='page-form'>
                             <Form.Group className="mb-3">
-                                    <Form.Label>Name</Form.Label>
+                                    <Form.Label className='form-label form-first-label'>Name</Form.Label>
                                     <Form.Control 
                                     id="edit-name"
                                     type="text" 
@@ -208,30 +206,33 @@ function EditMenu() {
                                     required
                                     />
                                 </Form.Group>
+                        </div>
 
-                                <div className='edit-ingredient-btn'>
-                                    <Button className='page-btn' variant="primary" onClick={handleShow}>
-                                        Add Recipes
-                                    </Button>
-                                </div>
 
-                                <Table striped hover responsive>
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
+                        <div className='flex-container'>
+                            <div>
+                                <Button className='page-btn edit-action-btns' variant="primary" onClick={handleShow}>
+                                    Add Recipes
+                                </Button>
+                            </div>
+
+                            <Table striped hover responsive>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {selectedRecipes?.map((recipe: Recipe) => {
+
+                                        return (
+                                        <tr key={recipe.id}>
+                                            <td>{recipe.name}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {selectedRecipes?.map((recipe: Recipe) => {
-
-                                            return (
-                                            <tr key={recipe.id}>
-                                                <td>{recipe.name}</td>
-                                            </tr>
-                                        )
-                                        })}
-                                    </tbody>
-                                </Table>
+                                    )
+                                    })}
+                                </tbody>
+                            </Table>
                         </div>
                     </Form>
                 </div> 
