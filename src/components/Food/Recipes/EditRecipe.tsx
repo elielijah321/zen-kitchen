@@ -110,7 +110,7 @@ function EditRecipe() {
         if(window.confirm(`Are you sure you want to delete ${selectedRecipe.name}`))
         {
             await deleteRecipeById(selectedRecipe.id);
-            navigate('/Food', {replace: true});
+            navigate('/Food?tab=Recipes', {replace: true});
         };
     };
 

@@ -65,7 +65,7 @@ function EditIngredient() {
         if(window.confirm(`Are you sure you want to delete ${selectedIngredient.name}`))
         {
             await deleteIngredientById(selectedIngredient.id);
-            navigate('/Food', {replace: true});
+            navigate('/Food?tab=Ingredients', {replace: true});
         };
     };
 

@@ -115,7 +115,7 @@ function EditMenu() {
         if(window.confirm(`Are you sure you want to delete ${selectedMenu.name}`))
         {
             await deleteMenuById(selectedMenu.id);
-            navigate('/Food', {replace: true});
+            navigate('/Food?tab=Menus', {replace: true});
         };
     };
 
