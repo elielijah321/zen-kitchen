@@ -18,7 +18,7 @@ function EditRecipe() {
 
     const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
 
-    const [searchTerm, setSearchTerm] = useState<string>("");
+    // const [searchTerm, setSearchTerm] = useState<string>("");
 
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
@@ -65,16 +65,16 @@ function EditRecipe() {
         setHasBeenEdited(true);
     }
 
-    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
 
-        const term = event.target.value;
+    //     const term = event.target.value;
 
-        var _ingredients = ingredients?.filter(i => i.name.includes(term));
+    //     var _ingredients = ingredients?.filter(i => i.name.includes(term));
         
-        setIngredients(_ingredients);
-        setSearchTerm(term);
+    //     setIngredients(_ingredients);
+    //     setSearchTerm(term);
 
-    }
+    // }
 
     const toggleSelectedIngredient = (_ingredient: Ingredient) => {
 
