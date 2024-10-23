@@ -62,7 +62,7 @@ function IngredientsComponent() {
                                           <td>
                                             {
                                               <Link to={`/Allergy/${_allergy.id}`} className="button">
-                                                  <Button id={`${_allergy.id}-btn`}>
+                                                  <Button className='page-btn' id={`${_allergy.id}-btn`}>
                                                       Edit
                                                   </Button>
                                               </Link>

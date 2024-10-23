@@ -66,8 +66,8 @@ function EditAllergy() {
                     <h1>Edit Allergy</h1>
                     <Form noValidate validated={validated} onSubmit={event => handleSubmit(event)}>
 
-                        <div className='edit-action-btns'>
-                            <Button id="save" className='edit-form-submit' variant="primary" type="submit">
+                        <div className='page-btn'>
+                            <Button id="save" className='page-btn' variant="primary" type="submit">
                                 Save
                             </Button>
                                 

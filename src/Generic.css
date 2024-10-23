@@ -177,9 +177,14 @@
   .order-confirm-btn{
     z-index: 1 "important";
 
-    color: #000 !important;
-    background-color: #48922a !important;
-    border-color: #000 !important;
+    color: #FFF !important;
+    /* background-color: #48922a !important; */
+    /* border-color:  !important; */
+    border: 2px solid #000 !important;
+
+
+    background-color: #2a6612 !important;
+
   }
 
   .form-check-input:checked{
@@ -195,4 +200,41 @@
   .nav-link:not(.active) {
     background-color: #FFF !important;
     color: #000 !important;
+  }
+
+
+  .page-btn {
+    background-color: #b29177 !important;
+    /* border-color: #000 !important; */
+
+    border: 1.5px solid #000 !important;
+
+  }
+
+
+  .page-btn:hover {
+    background-color: #e5d5b4 !important;
+    /* border-color: #000 !important; */
+
+    /* border: 1.5px solid #000 !important; */
+
+  }
+
+  .page-delete-btn{
+    border: 1.5px solid #000 !important;
+
+  }
+
+
+  .edit-action-btns{
+    /* fle */
+    /* flex: auto;
+    justify-content: space-between !important; */
+
+    /* float: right !important; */
+  }
+
+
+  .form-component{
+    margin-top: 50px !important;
   }

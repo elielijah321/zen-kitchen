@@ -41,7 +41,7 @@ function MenuComponent() {
             canEdit() &&
             <div className='add-new-entity-btn'>
                   <Link className="navitem" to="/Menu/new">
-                      <Button variant="primary" className="mb-3">
+                      <Button variant="primary" className="mb-3 page-btn">
                           Add Menu
                       </Button>
                   </Link>
@@ -79,7 +79,7 @@ function MenuComponent() {
                                           <td>
                                             {
                                               <Link to={`/Menu/${_menu.id}`} className="button">
-                                                  <Button id={`${_menu.id}-btn`}>
+                                                  <Button className='page-btn' id={`${_menu.id}-btn`}>
                                                       Edit
                                                   </Button>
                                               </Link>

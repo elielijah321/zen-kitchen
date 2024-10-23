@@ -95,19 +95,19 @@ function EditIngredient() {
                     <Form noValidate validated={validated} onSubmit={event => handleSubmit(event)}>
 
                         <div className='edit-action-btns'>
-                            <Button id="save" className='edit-form-submit' variant="primary" type="submit">
+                            <Button id="save" className='page-btn' variant="primary" type="submit">
                                 Save
                             </Button>
                                 
                             {parsedId !== "new" && 
                             (
-                                <Button id="save" className='edit-form-submit' variant="danger" onClick={handleDelete} >
+                                <Button id="save" className='page-delete-btn' variant="danger" onClick={handleDelete} >
                                     Delete
                                 </Button>
                             )}
                         </div>
 
-                        <div className='page'>
+                        <div className='form-component'>
                             <Form.Group className="mb-3">
                                     <Form.Label>Name</Form.Label>
                                     <Form.Control 

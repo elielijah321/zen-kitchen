@@ -28,7 +28,7 @@ function AllergiesComponent() {
             canEdit() &&
             <div className='add-new-entity-btn'>
                   <Link className="navitem" to="/Ingredient/new">
-                      <Button variant="primary" className="mb-3">
+                      <Button variant="primary" className="mb-3 page-btn">
                           Add Ingredient
                       </Button>
                   </Link>
@@ -66,7 +66,7 @@ function AllergiesComponent() {
                                           <td>
                                             {
                                               <Link to={`/Ingredient/${_ingredient.id}`} className="button">
-                                                  <Button id={`${_ingredient.id}-btn`}>
+                                                  <Button id={`${_ingredient.id}-btn`} className='page-btn'>
                                                       Edit
                                                   </Button>
                                               </Link>

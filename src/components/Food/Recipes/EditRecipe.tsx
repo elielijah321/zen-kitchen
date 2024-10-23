@@ -186,13 +186,13 @@ function EditRecipe() {
                     <Form noValidate validated={validated} onSubmit={event => handleSubmit(event)}>
 
                         <div className='edit-action-btns'>
-                            <Button id="save" className='edit-form-submit' variant="primary" type="submit">
+                            <Button id="save" className='page-btn' variant="primary" type="submit">
                                 Save
                             </Button>
                                 
                             {parsedId !== "new" && 
                             (
-                                <Button id="save" className='edit-form-submit' variant="danger" onClick={handleDelete} >
+                                <Button id="save" className='page-delete-btn' variant="danger" onClick={handleDelete} >
                                     Delete
                                 </Button>
                             )}
@@ -227,7 +227,7 @@ function EditRecipe() {
                                 </Form.Group>
 
                                 <div className='edit-ingredient-btn'>
-                                    <Button  variant="primary" onClick={handleShow}>
+                                    <Button className='page-btn'  variant="primary" onClick={handleShow}>
                                         Add Ingredients
                                     </Button>
                                 </div>
