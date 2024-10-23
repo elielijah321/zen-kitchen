@@ -1,3 +1,4 @@
+import './Loading.css'
 
 function Loading() {
   return (

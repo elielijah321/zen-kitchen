@@ -10,7 +10,7 @@ function ShoppingComponent() {
   // const state = useSelector((state: RootState) => state.systemUser);
   // const systemUser = state.systemUser;
 
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>();
   // const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [shoppingList, setShoppingList] = useState<ShoppingListItem[]>([]); 
 

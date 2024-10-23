@@ -10,7 +10,7 @@ function OrderComponent() {
   // const state = useSelector((state: RootState) => state.systemUser);
   // const systemUser = state.systemUser;
 
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>();
   
 
   useEffect(() => {
