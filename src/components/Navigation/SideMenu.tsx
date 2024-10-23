@@ -6,7 +6,6 @@ import Profile from "./icons/profile.png";
 // import RabbitIcon from "./icons/Rabbit.png";
 import Money from "./icons/money.png";
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import Home from '../Home';
 
 import ForgotPasswordPage from './Authentication/ForgotPassword';
 import LoginPage from './Authentication/LoginPage';
@@ -66,7 +65,7 @@ const SideMenu: React.FC = () => {
 
       <BrowserRouter>
           <Routes>
-              <Route path="/" element={navigateToPageIfAuthenticated(<Home />)} />
+              <Route path="/" element={navigateToPageIfAuthenticated(<OrderPage />)} />
               <Route path="/Food" element={navigateToPageIfAuthenticated(<FoodPage />)} />
               <Route path="/Allergy/:id" element={navigateToPageIfAuthenticated(<EditAllergy />)} />
               <Route path="/Ingredient/:id" element={navigateToPageIfAuthenticated(<EditIngredient />)} />
