@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SideMenu.css';
 
-import NestBox from "./icons/nest-box.png";
+// import NestBox from "./icons/nest-box.png";
 import Profile from "./icons/profile.png";
 // import RabbitIcon from "./icons/Rabbit.png";
 import Money from "./icons/money.png";
@@ -29,9 +29,8 @@ const SideMenu: React.FC = () => {
 
   const menuItems = 
   [
-      { name: 'Home', icon: NestBox, path: '/home' },
-      { name: 'Food', icon: Profile, path: '/Food' },
       { name: 'Orders', icon: Money, path: '/Orders' },
+      { name: 'Food', icon: Profile, path: '/Food' },
       // { name: 'Documents', icon: Money, path: '/Documents' }
   ];
 
@@ -68,7 +67,6 @@ const SideMenu: React.FC = () => {
       <BrowserRouter>
           <Routes>
               <Route path="/" element={navigateToPageIfAuthenticated(<Home />)} />
-              <Route path="/home" element={navigateToPageIfAuthenticated(<Home />)} />
               <Route path="/Food" element={navigateToPageIfAuthenticated(<FoodPage />)} />
               <Route path="/Allergy/:id" element={navigateToPageIfAuthenticated(<EditAllergy />)} />
               <Route path="/Ingredient/:id" element={navigateToPageIfAuthenticated(<EditIngredient />)} />

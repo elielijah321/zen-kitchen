@@ -127,15 +127,34 @@
     margin-bottom: 50px !important;
   }
 
-  .edit-ingredient-btn{
-    /* display: inline-block !important;
-    float: right;
-    width: 100%; */
+  .accordion-button {
+    background-color: #C8B5A6 !important;
+    color: #000;
+  }
+
+  .accordion-button:not(.collapsed) {
+
+    color: #000 !important;
+  }
+
+  .accordion-button::after {
+
+    background-image: none !important;
+
+  } 
+
+  .order-table {
+    --bs-table-bg: #cdd2cb !important; 
+    --bs-table-border-color: #cdd2cb !important; 
+    border-color: #cdd2cb !important;
   }
 
   .order-header > .accordion-header > .accordion-button {
     padding: 0;
-    background-color: #cdd2cb;
+    background-color: #cdd2cb !important;
+    /* background-color: #EDE7D9 !important; */
+    /* background-color: #869a96 !important; */
+    
     margin-bottom: 20px;
     border: #000 2px solid !important;
 
@@ -157,4 +176,23 @@
 
   .order-confirm-btn{
     z-index: 1 "important";
+
+    color: #000 !important;
+    background-color: #48922a !important;
+    border-color: #000 !important;
+  }
+
+  .form-check-input:checked{
+    background-color: #C8B5A6 !important;
+    border-color: #C8B5A6 !important;
+  }
+
+  .nav-link {
+    background-color: #C8B5A6 !important;
+    color: #000 !important;
+  }
+
+  .nav-link:not(.active) {
+    background-color: #FFF !important;
+    color: #000 !important;
   }

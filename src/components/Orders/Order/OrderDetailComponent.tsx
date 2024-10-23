@@ -24,7 +24,7 @@ const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
           <Accordion.Header>
               <div className='order-header-btn block action-button'>
                 {/* <h3 className='centered'>{order.name}</h3> */}
-                <Table responsive className='cage-table'>
+                <Table responsive className='order-table'>
                   <thead>
                     <tr className='centered'>
                         <th>Date</th> 

@@ -112,7 +112,8 @@
   }
 
   .list.active {
-    background-color: rgb(36, 150, 80);
+    /* background-color: rgb(36, 150, 80); */
+    background-color: #C8B5A6 !important;
     color: rgb(255, 255, 255);
     border-radius: 5px;
   }
@@ -131,6 +132,9 @@
     height: 40px;
     /* padding-right: 20px; */
     padding-bottom: 10px;
+
+    padding-top: 3px;
+    padding-left: 5px;
   }
 
   .text{
