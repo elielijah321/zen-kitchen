@@ -7,12 +7,9 @@ import ToastMessage, { ToastMessageHandle } from '../../HelperComponents/Toast';
 import { showToast } from '../../../helpers/UserHelper';
 import logo from './logo.jpg';
 
-
-
 const LoginPage = () => {
 
   const toastRef = useRef<ToastMessageHandle>(null);
-
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
