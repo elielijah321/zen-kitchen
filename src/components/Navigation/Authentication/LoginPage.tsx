@@ -5,7 +5,7 @@ import { signIn, signUp } from './authService';
 import './Authentication.css';
 import ToastMessage, { ToastMessageHandle } from '../../HelperComponents/Toast';
 import { showToast } from '../../../helpers/UserHelper';
-import logo from './logo.jpg';
+import logo from './logo.png';
 
 const LoginPage = () => {
 
