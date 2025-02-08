@@ -49,14 +49,11 @@ jobs:
           dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
             --name GitHubPackages \
             --username ${{ github.repository_owner }} \
-            --password ${{ secrets.PAT_TOKEN }} \
+            --password ${{ secrets.GITHUB_PAT }} \
             --store-password-in-clear-text
 
-      - name: List NuGet Sources (Debugging)
+      - name: Debug NuGet Sources
         run: dotnet nuget list source
-
-      - name: Install Latest NuGet Package
-        run: dotnet add package aremu.core.services --source GitHubPackages
 
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: pwsh
