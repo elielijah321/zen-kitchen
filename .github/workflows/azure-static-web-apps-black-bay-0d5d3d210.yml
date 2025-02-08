@@ -37,7 +37,9 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4  # ✅ Updated to v4
-
+        with:
+          repository: elielijah321/zen-kitchen
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Restore dependencies
         run: dotnet restore --configfile nuget.config --no-cache --force
