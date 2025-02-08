@@ -49,11 +49,11 @@ jobs:
           dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
             --name GitHubPackages \
             --username ${{ github.repository_owner }} \
-            --password ${{ secrets.GITHUB_PAT }} \
+            --password ${{ secrets.PAT_TOKEN }} \
             --store-password-in-clear-text
 
-      - name: Debug NuGet Sources
-        run: dotnet nuget list source
+      - name: Restore dependencies
+        run: dotnet restore --configfile nuget.config --no-cache --force
 
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: pwsh
