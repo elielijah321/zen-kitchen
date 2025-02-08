@@ -6,58 +6,41 @@ on:
       - main
 
 jobs:
-  build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
-    name: Build and Deploy Job
-    steps:
-      - uses: actions/checkout@v4  # ✅ Updated to v4
-        with:
-          submodules: true
-          lfs: false
-      - name: Restore Dependencies
-        run: dotnet restore --configfile nuget.config --no-cache --force
-      - name: Build And Deploy
-        id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1  # ❗️ Still v1 (latest)
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_BAY_0D5D3D210 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for GitHub integrations (i.e. PR comments)
-          action: "upload"
-          ###### Repository/Build Configurations ######
-          app_location: "/dist" # App source code path
-          api_location: "./API" # API source code path - optional
-          output_location: "build" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
-
-
-  # publish_function_apps:
-  #   runs-on: windows-latest
-  #   permissions:
-  #     id-token: write # This is required for requesting the JWT
-
+  # build_and_deploy_job:
+  #   if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+  #   runs-on: ubuntu-latest
+  #   name: Build and Deploy Job
   #   steps:
-  #     - name: 'Checkout GitHub Action'
-  #       uses: actions/checkout@v4  # ✅ Updated to v4
+  #     - uses: actions/checkout@v4  # ✅ Updated to v4
+  #       with:
+  #         submodules: true
+  #         lfs: false
+  #     - name: Build And Deploy
+  #       id: builddeploy
+  #       uses: Azure/static-web-apps-deploy@v1  # ❗️ Still v1 (latest)
+  #       with:
+  #         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_BAY_0D5D3D210 }}
+  #         repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for GitHub integrations (i.e. PR comments)
+  #         action: "upload"
+  #         ###### Repository/Build Configurations ######
+  #         app_location: "/dist" # App source code path
+  #         api_location: "./API" # API source code path - optional
+  #         output_location: "build" # Built app content directory - optional
+  #         ###### End of Repository/Build Configurations ######
 
-  #     - name: Echo Regular Variable (Windows)
-  #       run: |
-  #         echo Repository Owner: %GITHUB_REPOSITORY_OWNER%
-  #         echo Run Number: %GITHUB_RUN_NUMBER%
-  #         echo Run Number: %${{ secrets.PAT_TOKEN }}%
-  #       shell: cmd
 
-  #     - name: Authenticate with GitHub Packages
-  #       run: |
-  #         dotnet nuget remove source GitHubPackages || true
-  #         dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
-  #           --name GitHubPackages \
-  #           --username ${{ github.repository_owner }} \
-  #           --password ${{ secrets.PAT_TOKEN }} \
-  #           --store-password-in-clear-text
+  publish_function_apps:
+    runs-on: windows-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
 
-  #     - name: Restore dependencies
-  #       run: dotnet restore --configfile nuget.config --no-cache --force
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v4  # ✅ Updated to v4
+
+
+      - name: Restore dependencies
+        run: dotnet restore --configfile nuget.config --no-cache --force
 
   #     - name: 'Resolve Project Dependencies Using Dotnet'
   #       shell: pwsh
