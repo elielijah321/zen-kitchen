@@ -38,6 +38,9 @@ jobs:
           output_location: "build" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
+
+          
+
   # publish_function_apps:
   #   runs-on: windows-latest
   #   permissions:
