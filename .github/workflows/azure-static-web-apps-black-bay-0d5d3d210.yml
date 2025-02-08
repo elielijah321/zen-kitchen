@@ -44,7 +44,16 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Authenticate with GitHub Packages
-        run: dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --name GitHubPackages --username ${{ github.repository_owner }} --password ${{ secrets.PAT_TOKEN }}
+        run: |
+          dotnet nuget remove source GitHubPackages || true
+          dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
+            --name GitHubPackages \
+            --username ${{ github.repository_owner }} \
+            --password ${{ secrets.PAT_TOKEN }} \
+            --store-password-in-clear-text
+
+      - name: List NuGet Sources (Debugging)
+        run: dotnet nuget list source
 
       - name: Install Latest NuGet Package
         run: dotnet add package aremu.core.services --source GitHubPackages
