@@ -38,11 +38,6 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
 
-      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
       - name: Authenticate with GitHub Packages
         run: |
           dotnet nuget remove source GitHubPackages || true
@@ -51,6 +46,9 @@ jobs:
             --username ${{ github.repository_owner }} \
             --password ${{ secrets.PAT_TOKEN }} \
             --store-password-in-clear-text
+
+      - name: Restore dependencies
+        run: dotnet restore --configfile nuget.config --no-cache --force
 
       - name: Restore dependencies
         run: dotnet restore --configfile nuget.config --no-cache --force
