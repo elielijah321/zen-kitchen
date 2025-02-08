@@ -10,8 +10,6 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
-    env:
-      skip_deploy_on_missing_secrets: true  # Add this line here
     steps:
       - uses: actions/checkout@v4  # ✅ Updated to v4
         with:
