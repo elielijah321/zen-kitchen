@@ -38,6 +38,13 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
 
+      - name: Echo Regular Variable (Windows)
+        run: |
+          echo Repository Owner: %GITHUB_REPOSITORY_OWNER%
+          echo Run Number: %GITHUB_RUN_NUMBER%
+          echo Run Number: %${{ secrets.PAT_TOKEN }}%
+        shell: cmd
+
       - name: Authenticate with GitHub Packages
         run: |
           dotnet nuget remove source GitHubPackages || true
@@ -46,9 +53,6 @@ jobs:
             --username ${{ github.repository_owner }} \
             --password ${{ secrets.PAT_TOKEN }} \
             --store-password-in-clear-text
-
-      - name: Restore dependencies
-        run: dotnet restore --configfile nuget.config --no-cache --force
 
       - name: Restore dependencies
         run: dotnet restore --configfile nuget.config --no-cache --force
