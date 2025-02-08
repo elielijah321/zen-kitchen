@@ -21,7 +21,7 @@ namespace Project.Function
             // MenuHelper.UpdateMenuSpreadSheet();
 
 
-            GoogleSheetService.DeleteRowById("8a19d481-2f59-48ff-a96f-bcd3006d352c");
+            // GoogleSheetService.DeleteRowById("8a19d481-2f59-48ff-a96f-bcd3006d352c");
 
 
             return new OkObjectResult("");

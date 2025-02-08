@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - main
 
 jobs:
   build_and_deploy_job:
@@ -46,6 +42,12 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Authenticate with GitHub Packages
+        run: dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --name GitHubPackages --username ${{ github.repository_owner }} --password ${{ secrets.PAT_TOKEN }}
+
+      - name: Install Latest NuGet Package
+        run: dotnet add package aremu.core.services --source GitHubPackages
 
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: pwsh

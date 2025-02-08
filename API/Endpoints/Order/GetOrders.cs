@@ -10,6 +10,8 @@ using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
 using AzureFunctions.Mappers;
+using AremuCoreServices;
+using AremuCoreServices.Models.CredentialRecords;
 
 namespace Project.Function
 {
@@ -24,7 +26,10 @@ namespace Project.Function
 
             var allRecipres = RepositoryWrapper.GetRepo().GetAllRecipes();
 
-            var data = GoogleSheetService.GetData();
+            var creds = GetGoogleCredentials.Get();
+            var sheetInfo = new GoogleSheetInfoRecord(GetGoogleCredentials.SpreadsheetId, "Orders!A2:Z");
+
+            var data = GoogleSheetService.GetData(creds, sheetInfo);
 
             var orderList = data != null ? ParseOrders(data, allRecipres) : Array.Empty<Order>();
 

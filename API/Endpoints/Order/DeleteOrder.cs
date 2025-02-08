@@ -5,6 +5,8 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Company.Function;
+using AremuCoreServices;
+using AremuCoreServices.Models.CredentialRecords;
 
 namespace Project.Function
 {
@@ -17,7 +19,10 @@ namespace Project.Function
         {
             log.LogInformation("DeleteOrder function processed a request.");
 
-            GoogleSheetService.DeleteRowById(orderId);
+            var creds = GetGoogleCredentials.Get();
+            var sheetInfo = new GoogleSheetInfoRecord(GetGoogleCredentials.SpreadsheetId, "Orders!A2:Z");
+
+            GoogleSheetService.DeleteRowById(creds, sheetInfo, orderId);
 
             return new OkObjectResult("setting");
         }

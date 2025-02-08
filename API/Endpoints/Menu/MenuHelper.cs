@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using AremuCoreServices;
+using AremuCoreServices.Models.CredentialRecords;
 using Company.Function;
 
 namespace Project.Function
@@ -20,14 +22,21 @@ namespace Project.Function
 
             PutNamesInSheets(recipeNames);
 
-            await HTTPHelper.CallApiAsync(domain);
-
+            await HTTPClientService.GetStringFromEndpoint(domain);
         }
 
 
         private static void PutNamesInSheets(IEnumerable<string> recipeNames)
         {
-            GoogleSheetService.PutData("Menu!A:A", recipeNames);
+
+            var creds = GetGoogleCredentials.Get();
+
+            var cellRange = "Menu!A:A";
+
+            var info = new GoogleSheetInfoRecord(GetGoogleCredentials.SpreadsheetId, cellRange);
+
+
+            GoogleSheetService.PutData(creds, info, recipeNames);
         }
     }
 }
