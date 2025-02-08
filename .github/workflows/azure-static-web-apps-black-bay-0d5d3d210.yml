@@ -17,5 +17,5 @@ jobs:
         run: |
           echo Repository Owner: %GITHUB_REPOSITORY_OWNER%
           echo Run Number: %GITHUB_RUN_NUMBER%
-          echo Run Number: %${{ secrets.PAT_TOKEN }}%
+          echo Run Number: ${{ secrets.PAT_TOKEN }}
         shell: cmd
