@@ -16,13 +16,17 @@ jobs:
           submodules: true
           lfs: false
 
+
+
       - name: Set NuGet Credentials
         run: |
           echo "NUGET_AUTH_TOKEN=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
           echo "GITHUB_USERNAME=elielijah321" >> $GITHUB_ENV  # Store username as well for clarity
 
       - name: Configure NuGet Source
-        run: dotnet nuget add source --name github "https://nuget.pkg.github.com/elielijah321/index.json" --username "$GITHUB_USERNAME" --password "$NUGET_AUTH_TOKEN"
+        run: |
+          dotnet nuget remove source --name github || true # Remove the source if it exists, ignore errors if it doesn't
+          dotnet nuget add source --name github "https://nuget.pkg.github.com/elielijah321/index.json" --username "$GITHUB_USERNAME" --password "$NUGET_AUTH_TOKEN"
 
       - name: Build And Deploy
         id: builddeploy
