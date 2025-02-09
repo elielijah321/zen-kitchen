@@ -24,37 +24,15 @@ jobs:
         run: dotnet nuget remove source GitHubPackages
 
       - name: Authenticate with GitHub Packages
-        run: dotnet nuget add source "https://nuget.pkg.github.com/elielijah321/index.json" --name GitHubPackages --username elielijah321 --password ${{ secrets.PAT_TOKEN }} --store-password-in-clear-text
-
-      - name: List NuGet Locals
-        run: dotnet nuget list source
+        run: dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --name GitHubPackages --username ${{ github.repository_owner }} --password ${{ secrets.PAT_TOKEN }} --store-password-in-clear-text
 
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: bash
         run: |
           # Restore and Build
-          dotnet restore "./API/API.csproj"
-          dotnet build "./API/API.csproj" --configuration Release --output ./output
+          dotnet restore "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/API.csproj"
+          dotnet build "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/API.csproj" --configuration Release --output ./output
 
-      # - name: Authenticate with GitHub Packages
-      #   run: |
-      #     dotnet nuget remove source GitHubPackages || true
-      #     dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
-      #       --name GitHubPackages \
-      #       --username ${{ github.repository_owner }} \
-      #       --password ${{ secrets.PAT_TOKEN }} \
-      #       --store-password-in-clear-text
-
-      # - name: Restore dependencies
-      #   run: dotnet restore --configfile nuget.config --no-cache --force
-
-      # - name: 'Resolve Project Dependencies Using Dotnet'
-      #   shell: pwsh
-      #   run: |
-      #     pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-      #     dotnet build --configuration Release --output ./output
-      #     popd
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
