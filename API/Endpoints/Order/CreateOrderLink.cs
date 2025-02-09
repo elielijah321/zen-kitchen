@@ -38,7 +38,7 @@ namespace Project.Function
             var orderList = data != null ? ParseOrders(data, allRecipres) : Array.Empty<Order>();
 
             var orderItems = orderList.ToList()[0].OrderDetails.Select(od => {
-                return new StripeLineItemRecord(od.Name, 1, 1);
+                return new StripeLineItemRecord(od.Name, od.Price, 1);
             });
 
             var paymentSessionLinkUrl = StripeService.CreateCheckoutSession(stripeCreds, orderItems, new StripePaymentType[] {StripePaymentType.CARD});

@@ -6,6 +6,6 @@ namespace Project.Function
     {
         public string Name { get; set; }
         public IEnumerable<RecipeItem> Ingredients { get; set; }
-        public float Price { get; set; }
+        public long Price { get; set; }
     }
 }

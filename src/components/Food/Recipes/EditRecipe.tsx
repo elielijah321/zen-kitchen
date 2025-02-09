@@ -65,6 +65,12 @@ function EditRecipe() {
         setHasBeenEdited(true);
     }
 
+    const handlePriceChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const price = event.target.value;
+        setSelectedRecipe({...selectedRecipe, price: parseFloat(price)});
+        setHasBeenEdited(true);
+    }
+
     // const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
 
     //     const term = event.target.value;
@@ -152,8 +158,6 @@ function EditRecipe() {
                         {
                             ingredients?.map((ingredient: Ingredient) => {
 
-                                console.log(selectedIngredients);
-
                                 return (
                                     selectedIngredients &&
                                     <tr key={ingredient.id}>
@@ -219,6 +223,17 @@ function EditRecipe() {
                                     placeholder="Name" 
                                     onChange={handleNameChange} 
                                     value={selectedRecipe.name} 
+                                    required
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Price</Form.Label>
+                                    <Form.Control 
+                                    type="number" 
+                                    placeholder="Price" 
+                                    onChange={handlePriceChange} 
+                                    value={selectedRecipe.price} 
                                     required
                                     />
                                 </Form.Group>

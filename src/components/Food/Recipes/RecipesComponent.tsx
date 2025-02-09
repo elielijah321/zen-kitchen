@@ -51,6 +51,7 @@ function RecipesComponent() {
                               <thead>
                                   <tr>
                                       <th>Name</th>
+                                      <th>Price</th>
                                       <th>Calories</th>
                                       <th>Protein</th>
                                       <th></th>
@@ -65,6 +66,7 @@ function RecipesComponent() {
                                     return (
                                       <tr key={_recipe.id}>
                                           <td>{_recipe.name}</td>
+                                          <td>{_recipe.price}</td>
                                           <td>{calculateTotalCalories(ingredients)}</td>
                                           <td>{calculateTotalProtein(ingredients)}</td>
                                           <td>
