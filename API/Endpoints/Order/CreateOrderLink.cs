@@ -43,6 +43,9 @@ namespace Project.Function
 
             var paymentSessionLinkUrl = StripeService.CreateCheckoutSession(stripeCreds, orderItems, new StripePaymentType[] {StripePaymentType.CARD});
             
+
+            await TelegramService.SendMessage(paymentSessionLinkUrl);
+
             return new OkObjectResult(paymentSessionLinkUrl);
         }
 
