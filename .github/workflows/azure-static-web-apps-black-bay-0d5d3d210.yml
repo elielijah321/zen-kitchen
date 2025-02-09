@@ -37,8 +37,8 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4  # ✅ Updated to v4
 
-      - name: Search NuGet Locals
-        run: dotnet nuget remove source GitHubPackages
+      # - name: Search NuGet Locals
+      #   run: dotnet nuget remove source GitHubPackages
 
       # - name: Authenticate with GitHub Packages
       #   run: |
