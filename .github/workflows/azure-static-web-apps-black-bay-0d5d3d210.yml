@@ -56,18 +56,18 @@ jobs:
         run: |
           # Debug: Check the contents of the AZURE_FUNCTIONAPP_PACKAGE_PATH
           echo "Checking the AZURE_FUNCTIONAPP_PACKAGE_PATH"
-          ls -la "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"  # Ensure this path is correct
+          ls -la "./API"  # Ensure this path is correct
           
           # Check if .csproj file exists in the directory
-          if [ -f "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/API.csproj" ]; then
+          if [ -f "./API/API.csproj" ]; then
             echo ".csproj file found"
           else
             echo ".csproj file not found"
           fi
 
           # Restore and Build
-          dotnet restore "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/API.csproj"
-          dotnet build "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/API.csproj" --configuration Release --output ./output
+          dotnet restore "./API/API.csproj"
+          dotnet build "./API/API.csproj" --configuration Release --output ./output
 
       # - name: Authenticate with GitHub Packages
       #   run: |
