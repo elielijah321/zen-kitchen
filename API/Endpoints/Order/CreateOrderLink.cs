@@ -12,7 +12,6 @@ using AremuCoreServices.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using System.Globalization;
 using AzureFunctions.Mappers;
 using AremuCoreServices.Models.Enums;
 
@@ -43,8 +42,9 @@ namespace Project.Function
 
             var paymentSessionLinkUrl = StripeService.CreateCheckoutSession(stripeCreds, orderItems, new StripePaymentType[] {StripePaymentType.CARD});
             
+            string shortenedUrl = await URLShortnerService.Shorten(paymentSessionLinkUrl);
 
-            await TelegramService.SendMessage(paymentSessionLinkUrl);
+            await TelegramService.SendMessage(shortenedUrl);
 
             return new OkObjectResult(paymentSessionLinkUrl);
         }
