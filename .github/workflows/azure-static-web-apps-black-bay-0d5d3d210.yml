@@ -37,6 +37,37 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4  # ✅ Updated to v4
 
+      - name: Search NuGet Locals
+        run: dotnet nuget remove source GitHubPackages
+
+      - name: Authenticate with GitHub Packages
+        run: |
+          dotnet nuget add source "https://nuget.pkg.github.com/elielijah321/index.json" \
+            --name GitHubPackages \
+            --username ${{ github.repository_owner }} \
+            --password ${{ secrets.PAT_TOKEN }} \
+            --store-password-in-clear-text
+
+      - name: List NuGet Locals
+        run: dotnet nuget list source
+
+      - name: 'Resolve Project Dependencies Using Dotnet'
+        shell: bash
+        run: |
+          # Debug: Check the contents of the AZURE_FUNCTIONAPP_PACKAGE_PATH
+          echo "Checking the AZURE_FUNCTIONAPP_PACKAGE_PATH"
+          ls -la "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"  # Ensure this path is correct
+          
+          # Check if .csproj file exists in the directory
+          if [ -f "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/API.csproj" ]; then
+            echo ".csproj file found"
+          else
+            echo ".csproj file not found"
+          fi
+
+          # Restore and Build
+          dotnet restore "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/API.csproj"
+          dotnet build "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/API.csproj" --configuration Release --output ./output
 
       # - name: Authenticate with GitHub Packages
       #   run: |
