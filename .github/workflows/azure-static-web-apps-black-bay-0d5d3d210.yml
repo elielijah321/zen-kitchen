@@ -41,12 +41,7 @@ jobs:
         run: dotnet nuget remove source GitHubPackages
 
       - name: Authenticate with GitHub Packages
-        run: |
-          dotnet nuget add source "https://nuget.pkg.github.com/elielijah321/index.json" \
-            --name GitHubPackages \
-            --username ${{ github.repository_owner }} \
-            --password ${{ secrets.PAT_TOKEN }} \
-            --store-password-in-clear-text
+        run: dotnet nuget add source "https://nuget.pkg.github.com/elielijah321/index.json" --name GitHubPackages --username ${{ github.repository_owner }} --password ${{ secrets.PAT_TOKEN }} --store-password-in-clear-text
 
       - name: List NuGet Locals
         run: dotnet nuget list source
