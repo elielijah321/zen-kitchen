@@ -41,9 +41,17 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.x # Specify your .NET version
-
-      - name: Remove nuget source
-        run: dotnet nuget remove source GitHubPackages
+          
+      - name: Check if NuGet source exists and remove it
+        shell: pwsh
+        run: |
+          $sourceExists = dotnet nuget list source | Select-String "GitHubPackages"
+          if ($sourceExists) {
+            Write-Host "NuGet source 'GitHubPackages' exists. Removing..."
+            dotnet nuget remove source GitHubPackages
+          } else {
+            Write-Host "NuGet source 'GitHubPackages' does not exist. Skipping removal."
+          }
 
       - name: Authenticate with GitHub Packages
         run: dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --name GitHubPackages --username ${{ github.repository_owner }} --password ${{ secrets.PAT_TOKEN }} --store-password-in-clear-text
