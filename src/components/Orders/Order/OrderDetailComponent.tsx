@@ -2,20 +2,20 @@ import React from 'react'
 import { Accordion, Button, Table } from 'react-bootstrap';
 import { Order } from '../../../types/Order/Order';
 import { getDisplayDate } from '../../../helpers/DateHelper';
-import { createOrderLink, deleteOrderById } from '../../../functions/fetchEntities';
+import { createOrderLink } from '../../../functions/fetchEntities';
 
 
 const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
 
 
-  const handleDelete = async () => {
+//   const handleDelete = async () => {
 
-    if(window.confirm(`Are you sure you want to delete ${order.name}'s order?`))
-    {
-        await deleteOrderById(order.id);
-        window.location.reload();
-    };
-};
+//     if(window.confirm(`Are you sure you want to delete ${order.name}'s order?`))
+//     {
+//         await deleteOrderById(order.id);
+//         window.location.reload();
+//     };
+// };
 
 const handleCreatePaymentLink = async () => {
 
@@ -53,9 +53,9 @@ const handleCreatePaymentLink = async () => {
                             <Button id="save" className='order-confirm-btn' variant="danger" onClick={() => handleCreatePaymentLink()} >
                                 Create Payment Link
                             </Button>
-                            <Button id="save"  variant="danger" onClick={() => handleDelete()} >
+                            {/* <Button id="save"  variant="danger" onClick={() => handleDelete()} >
                                 Delete Order
-                            </Button>
+                            </Button> */}
                       </td>
                     </tr>
                   </tbody>
