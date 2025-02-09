@@ -37,7 +37,7 @@ namespace Project.Function
 
             var orderList = data != null ? ParseOrders(data, allRecipres) : Array.Empty<Order>();
 
-            var orderItems = orderList.ToList()[0].OrderDetails.Select(od => {
+            var orderItems = orderList.FirstOrDefault(o => o.Id.ToString() == orderId).OrderDetails.Select(od => {
                 return new StripeLineItemRecord(od.Name, od.Price, 1);
             });
 
