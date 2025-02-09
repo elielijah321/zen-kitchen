@@ -189,5 +189,12 @@ export const getAllOrders = async () => {
 }
 
 export const deleteOrderById = async (id: string) => {
-    await fetch(`${domain}/DeleteOrder/${id}`, getGETOptions());;
+    await fetch(`${domain}/DeleteOrder/${id}`, getGETOptions());
+}
+
+export const createOrderLink = async (id: string) => {
+   const response = await fetch(`${domain}/CreateOrderLink/${id}`, getGETOptions())
+   .then(response => response.text() as Promise<string>);
+
+    return response;
 }

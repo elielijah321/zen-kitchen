@@ -2,7 +2,7 @@ import React from 'react'
 import { Accordion, Button, Table } from 'react-bootstrap';
 import { Order } from '../../../types/Order/Order';
 import { getDisplayDate } from '../../../helpers/DateHelper';
-import { deleteOrderById } from '../../../functions/fetchEntities';
+import { createOrderLink, deleteOrderById } from '../../../functions/fetchEntities';
 
 
 const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
@@ -15,6 +15,17 @@ const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
         await deleteOrderById(order.id);
         window.location.reload();
     };
+};
+
+const handleCreatePaymentLink = async () => {
+
+  await createOrderLink(order.id).then(data => {
+
+    open(data, '_blank')
+
+  });
+
+
 };
 
 
@@ -39,7 +50,10 @@ const OrderDetailComponent: React.FC<{order: Order}> = ({order}) => {
                       <td>{order.name}</td>
                       <td>{order.phoneNumber}</td>
                       <td>
-                            <Button id="save" className='order-confirm-btn' variant="danger" onClick={() => handleDelete()} >
+                            <Button id="save" className='order-confirm-btn' variant="danger" onClick={() => handleCreatePaymentLink()} >
+                                Create Payment Link
+                            </Button>
+                            <Button id="save"  variant="danger" onClick={() => handleDelete()} >
                                 Delete Order
                             </Button>
                       </td>
