@@ -23,12 +23,13 @@ jobs:
 
       - name: Configure NuGet Source
         run: |
-          # Try to remove the source (ignore errors if it doesn't exist)
-          dotnet nuget list source | grep -q "github" && dotnet nuget remove source --name github || true
+          # Try to remove the source if it exists
+          dotnet nuget list source | grep -q "github" && dotnet nuget remove source github || true
 
           # Add the GitHub Packages source
-          dotnet nuget add source --name github "https://nuget.pkg.github.com/elielijah321/index.json" --username "$GITHUB_USERNAME" --password "$NUGET_AUTH_TOKEN"
-
+          dotnet nuget add source "https://nuget.pkg.github.com/elielijah321/index.json" --name github --username "$GITHUB_USERNAME" --password "$NUGET_AUTH_TOKEN" --store-password-in-clear-text
+        shell: bash
+        
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
