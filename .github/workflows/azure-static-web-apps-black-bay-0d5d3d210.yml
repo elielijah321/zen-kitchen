@@ -16,10 +16,13 @@ jobs:
           submodules: true
           lfs: false
 
-      - name: Configure NuGet for GitHub Packages
+      - name: Set NuGet Credentials
         run: |
-          echo "##vso[task.setvariable variable=NUGET_AUTH_TOKEN;isOutput=true]$(echo '${{ secrets.PAT_TOKEN }}')" >> $GITHUB_ENV
-          dotnet nuget add source --index 0 --name github "https://nuget.pkg.github.com/elielijah321/index.json" --username elielijah321 --password ${{ env.NUGET_AUTH_TOKEN }}
+          echo "NUGET_AUTH_TOKEN=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
+          echo "GITHUB_USERNAME=elielijah321" >> $GITHUB_ENV  # Store username as well for clarity
+
+      - name: Configure NuGet Source
+        run: dotnet nuget add source --name github "https://nuget.pkg.github.com/elielijah321/index.json" --username "$GITHUB_USERNAME" --password "$NUGET_AUTH_TOKEN"
 
       - name: Build And Deploy
         id: builddeploy
