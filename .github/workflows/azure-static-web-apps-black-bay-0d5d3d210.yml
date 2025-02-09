@@ -15,56 +15,71 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1  # ❗️ Still v1 (latest)
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_BAY_0D5D3D210 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for GitHub integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations ######
+          app_location: "/dist" # App source code path
+          # api_location: "./API" # API source code path - optional
+          output_location: "build" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
 
-      - name: Build Project
-        run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          dotnet build --configuration Release --output ./output
-          popd
-        shell: bash
+  publish_function_apps:
+    runs-on: windows-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
 
-  # publish_function_apps:
-  #   runs-on: windows-latest
-  #   permissions:
-  #     id-token: write # This is required for requesting the JWT
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v4  # ✅ Updated to v4
 
-  #   steps:
-  #     - name: 'Checkout GitHub Action'
-  #       uses: actions/checkout@v4  # ✅ Updated to v4
-  #     - name: Debug Path
-  #       run: echo "AZURE_FUNCTIONAPP_PACKAGE_PATH=${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
-  #       shell: bash
 
-  #     - name: 'Resolve Project Dependencies Using Dotnet'
-  #       shell: pwsh
-  #       run: |
-  #         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-  #         dotnet build --configuration Release --output ./output
-  #         popd
-     
-  #     - name: Login to Azure
-  #       uses: azure/login@v2
-  #       with:
-  #         client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_77AAFB88059B4EFCBCCA4C04CAAB5770 }}
-  #         tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BC8EF28681D84994B6B4A8688F4B99E7 }}
-  #         subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_398B8B6298CE4D9AA7FF603C22EE8F77 }}
+      # - name: Authenticate with GitHub Packages
+      #   run: |
+      #     dotnet nuget remove source GitHubPackages || true
+      #     dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
+      #       --name GitHubPackages \
+      #       --username ${{ github.repository_owner }} \
+      #       --password ${{ secrets.PAT_TOKEN }} \
+      #       --store-password-in-clear-text
 
-  #     - name: 'Run Azure Functions Action'
-  #       uses: Azure/functions-action@v1
-  #       id: fa
-  #       with:
-  #         app-name: 'zenkitchen'
-  #         slot-name: 'Production'
-  #         package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+      # - name: Restore dependencies
+      #   run: dotnet restore --configfile nuget.config --no-cache --force
 
-  # close_pull_request_job:
-  #   if: github.event_name == 'pull_request' && github.event.action == 'closed'
-  #   runs-on: ubuntu-latest
-  #   name: Close Pull Request Job
-  #   steps:
-  #     - name: Close Pull Request
-  #       id: closepullrequest
-  #       uses: Azure/static-web-apps-deploy@v1  # ❗️ Still v1 (latest)
-  #       with:
-  #         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_BAY_0D5D3D210 }}
-  #         action: "close"
+      # - name: 'Resolve Project Dependencies Using Dotnet'
+      #   shell: pwsh
+      #   run: |
+      #     pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+      #     dotnet build --configuration Release --output ./output
+      #     popd
+      
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_77AAFB88059B4EFCBCCA4C04CAAB5770 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BC8EF28681D84994B6B4A8688F4B99E7 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_398B8B6298CE4D9AA7FF603C22EE8F77 }}
+
+      - name: 'Run Azure Functions Action'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: 'zenkitchen'
+          slot-name: 'Production'
+          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+  
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1  # ❗️ Still v1 (latest)
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_BAY_0D5D3D210 }}
+          action: "close"
